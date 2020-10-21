@@ -1,0 +1,21 @@
+footer {
+  background-color: #05668d;
+  grid-area: footer;
+  padding: 1vh;
+}
+p {
+  display: flex;
+  justify-content: center;
+  justify-items: end;
+  color: #f0efeb;
+  margin: 5px;
+}
+a {
+  color: #a8dadc;
+  height: auto;
+  text-decoration: none;
+  margin-left: 5px;
+}
+/* .linkedin {
+  margin-left: 5px;
+} */

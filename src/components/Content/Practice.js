@@ -116,9 +116,7 @@ class Practice extends React.Component {
     });
   };
 
-  countTodos = () => {
-    return this.state.todos.length;
-  };
+  countTodos = () => this.state.todos.length;
 
   render() {
     const todoItems = this.state.todos.map((item) => (
@@ -159,7 +157,7 @@ class Practice extends React.Component {
         </div>
         <br />
         <div className="todo-items">{todoItems}</div>
-        <Pagination countTodos={this.props} />
+        <Pagination countTodos={this.countTodos()} />
       </div>
     );
   }

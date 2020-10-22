@@ -1,6 +1,6 @@
 import React from "react";
 import TodoItem from "./TodoItem";
-import Pagination from "./Pagination";
+import Pagination from "../Pagination/Pagination";
 
 class Practice extends React.Component {
   constructor(props) {

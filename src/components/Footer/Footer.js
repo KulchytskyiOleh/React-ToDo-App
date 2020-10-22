@@ -9,8 +9,6 @@ function Footer(props) {
       phone={item.tel.phone}
       email={item.social.email}
       social={item.social.linkedin}
-      /* about_name={item.about.name}
-      about_surname={item.about.surname} */
     />
   ));
   return <footer>{about}</footer>;

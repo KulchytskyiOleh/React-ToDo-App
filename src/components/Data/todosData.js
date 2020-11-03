@@ -4,6 +4,8 @@ const todosData = [
   { id: 3, text: "read some book", completed: true },
   { id: 4, text: "ride on bike", completed: false },
 ];
+export default todosData;
+
 export let addTodo = (todosText, todos) => {
   let newTodo = {
     id: Date.now(),
@@ -13,8 +15,6 @@ export let addTodo = (todosText, todos) => {
   todos.push(newTodo);
   return true;
 };
-
-export default todosData;
 
 export const contacts = [
   {

@@ -12,8 +12,7 @@
 .Practice {
   background-color: #a70e0e;
   padding: 5px;
-  height: auto; /* 
-  padding-top: 200px; */
+  height: auto;
 }
 .todo-items {
   margin-bottom: 10px;
@@ -27,9 +26,7 @@
   align-items: center;
   margin-bottom: 20px;
 }
-/* .todoText{
-  background-color:#c0c0c0;
-} */
+
 .todo-item:nth-child(odd) {
   background-color: #fca311;
 }
@@ -47,16 +44,7 @@
   cursor: pointer;
   right: 3%;
 }
-.saveEditedText {
-  position: absolute;
-  cursor: pointer;
-  padding: 6px;
-  margin-right: 10px;
-  right: 5%;
-  border-radius: 10px;
-  background-color: #30ac30;
-  /* visibility: hidden; */
-}
+
 .textEdit {
   position: absolute;
   cursor: pointer;
@@ -80,16 +68,13 @@
   margin-right: 15px;
   border-radius: 5px;
 }
-.inputEditCheckboxText {
-  background-color: #dfdfdf;
-  padding: 10px 30px;
-  margin-left: 15px;
-  border-radius: 5px;
-}
-.item_insert > button {
+.button {
   background-color: #fca311;
   padding: 10px 20px;
   border-radius: 5px;
+}
+.saveEditedText {
+  background-color: #30ac30;
 }
 .countTodosButton {
   background-color: red;
@@ -109,8 +94,6 @@ div.Paginate > ul > li {
 }
 
 div.Paginate > ul > li > button {
-  /* float: left; */
-
   padding: 4px;
   margin-right: auto;
   border-radius: 5px;

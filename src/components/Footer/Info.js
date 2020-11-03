@@ -10,9 +10,7 @@ function Info(props) {
       <div>
         <p>
           Linkedin:
-          <a href={props.social}>
-            Oleh Kulchytskyi
-          </a>
+          <a href={props.social}>Oleh Kulchytskyi</a>
         </p>
         <p>&copy; by Oleh Kulchytskyi</p>
       </div>
@@ -20,3 +18,4 @@ function Info(props) {
   );
 }
 export default Info;
+

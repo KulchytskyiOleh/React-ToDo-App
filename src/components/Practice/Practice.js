@@ -6,9 +6,7 @@ class Practice extends React.Component {
   constructor(props) {
     super();
     this.newTodoItem = React.createRef();
-    this.editCheckboxText = React.createRef();
     this.state = {
-      showInput: false,
       showButton: false,
       currentItemId: 0,
       addTodos: props.addTodo,
@@ -16,13 +14,9 @@ class Practice extends React.Component {
     };
   }
 
-  inputStyle = {
-    hide: {
-      display: "none",
-    },
-    show: {
-      display: "block",
-    },
+  saveStyle = {
+    hide: { display: "none" },
+    show: { display: "block" },
   };
 
   /*  todo.completed = todo.id === id ? !todo.completed : todo.completed; */
@@ -73,30 +67,25 @@ class Practice extends React.Component {
     this.setState((prevState) => {
       prevState.todos.map((todo) => {
         if (todo.id === id) {
-          todo.text = this.editCheckboxText.current.value;
-          this.editCheckboxText.current.value = "";
+          todo.text = this.newTodoItem.current.value;
+          this.newTodoItem.current.value = "";
           return todo;
         }
         return true;
       });
       return {
         todos: prevState.todos,
-        showButton: false,
-        showInput: false,
         currentItemId: id,
       };
     });
   };
-
   textEdit = (id) => {
     this.setState({
-      showButton: true,
-      showInput: true,
       currentItemId: id,
     });
     this.state.todos.filter((item) => {
       if (item.id === id) {
-        this.editCheckboxText.current.value = item.text;
+        this.newTodoItem.current.value = item.text;
       }
       return true;
     });
@@ -118,6 +107,8 @@ class Practice extends React.Component {
 
   countTodos = () => this.state.todos.length;
 
+  toggleButton = (value) => this.setState({ showButton: value });
+
   render() {
     const todoItems = this.state.todos.map((item) => (
       <TodoItem
@@ -129,6 +120,7 @@ class Practice extends React.Component {
         saveEditedText={this.saveEditedText}
         showButton={this.state.showButton}
         currentItemId={this.state.currentItemId}
+        toggleButton={this.toggleButton}
       />
     ));
     return (
@@ -141,19 +133,35 @@ class Practice extends React.Component {
             placeholder="Add some new todo here..."
             required
           />
-
-          <button type="button" onClick={this.addTodo}>
-            ADD
-          </button>
-          <input
-            style={
-              this.state.showInput ? this.inputStyle.show : this.inputStyle.hide
-            }
-            className="inputEditCheckboxText"
-            type="text"
-            ref={this.editCheckboxText}
-            required
-          />
+          {this.state.showButton ? (
+            <button
+              style={
+                this.state.showButton
+                  ? this.saveStyle.show
+                  : this.saveStyle.hide
+              }
+              className="button saveEditedText"
+              onClick={() => {
+                this.saveEditedText(this.state.currentItemId);
+                this.toggleButton();
+              }}
+            >
+              <i className="far fa-save"> Save</i>
+            </button>
+          ) : (
+            <button
+              className="button add-button"
+              style={
+                this.showButton && this.state.currentItemId === this.item.id
+                  ? this.saveStyle.hide
+                  : this.saveStyle.show
+              }
+              type="button"
+              onClick={this.addTodo}
+            >
+              ADD
+            </button>
+          )}
         </div>
         <br />
         <div className="todo-items">{todoItems}</div>

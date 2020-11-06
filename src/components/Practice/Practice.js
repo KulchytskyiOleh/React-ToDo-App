@@ -6,6 +6,7 @@ class Practice extends React.Component {
   constructor(props) {
     super();
     this.newTodoItem = React.createRef();
+    this.searchTodoItem = React.createRef();
     this.state = {
       showButton: false,
       currentItemId: 0,
@@ -107,7 +108,45 @@ class Practice extends React.Component {
 
   countTodos = () => this.state.todos.length;
 
+  showActiveTodos = () => {
+    this.setState((prevState) => {
+      let activeTodos = prevState.todos.filter((todo) => {
+        if (todo.completed === false) {
+          return todo;
+        }
+        return "";
+      });
+      return {
+        todos: activeTodos,
+      };
+    });
+  };
+
+  showCompletedTodos = () => {
+    this.setState((prevState) => {
+      let completedTodos = prevState.todos.filter((todo) => {
+        if (todo.completed === true) {
+          return todo;
+        }
+        return "";
+      });
+      return {
+        todos: completedTodos,
+      };
+    });
+  };
+
   toggleButton = (value) => this.setState({ showButton: value });
+
+  searchTodo = () => {
+    let searchValue = this.searchTodoItem.current.value.trim().toLowerCase();
+    this.state.todos.filter((todo) => {
+      if (todo.text.toLowerCase().includes(searchValue)) {
+        console.log(todo.text, searchValue);
+      }
+      return console.log("-----");
+    });
+  };
 
   render() {
     const todoItems = this.state.todos.map((item) => (
@@ -133,6 +172,7 @@ class Practice extends React.Component {
             placeholder="Add some new todo here..."
             required
           />
+
           {this.state.showButton ? (
             <button
               style={
@@ -146,7 +186,7 @@ class Practice extends React.Component {
                 this.toggleButton();
               }}
             >
-              <i className="far fa-save"> Save</i>
+              <i className="far fa-save"> SAVE </i>
             </button>
           ) : (
             <button
@@ -159,9 +199,36 @@ class Practice extends React.Component {
               type="button"
               onClick={this.addTodo}
             >
-              ADD
+              <i className="fas fa-plus-square"></i> ADD
             </button>
           )}
+          <br />
+
+          <button
+            className="button"
+            onClick={() => {
+              this.showActiveTodos();
+            }}
+          >
+            Active
+          </button>
+          <button
+            className="button"
+            onClick={() => {
+              this.showCompletedTodos();
+              /* this.setState(() => {}); */
+            }}
+          >
+            Completed
+          </button>
+          <input
+            className="searchTodoText"
+            type="text"
+            ref={this.searchTodoItem}
+            onKeyDown={() => this.searchTodo()}
+            placeholder="Search..."
+            required
+          />
         </div>
         <br />
         <div className="todo-items">{todoItems}</div>

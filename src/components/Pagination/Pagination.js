@@ -15,7 +15,7 @@ function Pagination(props) {
       <ul>
         {numberOfPage.map((number) => (
           <li key={number}>
-            <button>{number}</button>
+            <a href="#/">{number}</a>
           </li>
         ))}
       </ul>

@@ -1,8 +1,8 @@
 const todosData = [
-  { id: 1, text: "go to shop", completed: true },
-  { id: 2, text: "buy apples", completed: false },
-  { id: 3, text: "read some book", completed: true },
-  { id: 4, text: "ride on bike", completed: false },
+  { id: 1, text: "Go to shop", completed: true },
+  { id: 2, text: "Buy apples", completed: false },
+  { id: 3, text: "Read some book", completed: true },
+  { id: 4, text: "Ride on bike", completed: false },
 ];
 export default todosData;
 

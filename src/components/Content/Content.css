@@ -71,6 +71,7 @@
 .button {
   background-color: #fca311;
   padding: 10px 20px;
+  margin-right: 15px;
   border-radius: 5px;
 }
 .saveEditedText {
@@ -93,7 +94,7 @@ div.Paginate > ul > li {
   margin-left: 5px;
 }
 
-div.Paginate > ul > li > button {
+div.Paginate > ul > li > a {
   padding: 4px;
   margin-right: auto;
   border-radius: 5px;

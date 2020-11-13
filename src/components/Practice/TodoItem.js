@@ -8,7 +8,6 @@ function TodoItem(props) {
     textDecoration: "line-through",
   };
   const [state, setState] = useState(props.showButton);
-
   return (
     <div className="todo-item">
       <input

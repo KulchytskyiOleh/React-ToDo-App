@@ -62,11 +62,17 @@
   padding: 15px;
   justify-content: center;
 }
-.inputTodoText {
-  background-color: #eae2b7;
+.input {
   padding: 10px 30px;
   margin-right: 15px;
   border-radius: 5px;
+}
+.inputTodoText {
+  background-color: #eae2b7;
+}
+.inputSearchTodoText {
+  background-color: #d5dfff;
+  padding: 10px;
 }
 .button {
   background-color: #fca311;

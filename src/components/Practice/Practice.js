@@ -1,6 +1,8 @@
 import React from "react";
 import TodoItem from "./TodoItem";
 import Pagination from "../Pagination/Pagination";
+import Search from "../Search/Search";
+import Status from "../Status/Status";
 
 class Practice extends React.Component {
   constructor(props) {
@@ -8,14 +10,18 @@ class Practice extends React.Component {
     this.newTodoItem = React.createRef();
     this.searchTodoItem = React.createRef();
     this.state = {
+      search: "",
+      value: "",
       showButton: false,
       currentItemId: 0,
       addTodos: props.addTodo,
       todos: props.todosData,
+      filterChecked: false,
+      filterUnChecked: false,
     };
   }
 
-  saveStyle = {
+  showButtonStyle = {
     hide: { display: "none" },
     show: { display: "block" },
   };
@@ -23,14 +29,11 @@ class Practice extends React.Component {
   /*  todo.completed = todo.id === id ? !todo.completed : todo.completed; */
   handleChange = (id) => {
     this.setState((prevState) => {
-      const updatedTodos = prevState.todos.map((todo) => {
-        if (todo.id === id) {
-          todo.completed = !todo.completed;
-        }
-        return todo;
-      });
       return {
-        todos: updatedTodos,
+        todos: (this.updatedTodos = prevState.todos.map((todo) => {
+          todo.completed = todo.id === id ? !todo.completed : todo.completed;
+          return todo;
+        })),
       };
     });
   };
@@ -80,72 +83,45 @@ class Practice extends React.Component {
       };
     });
   };
+
   textEdit = (id) => {
-    this.setState({
-      currentItemId: id,
-    });
-    this.state.todos.filter((item) => {
-      if (item.id === id) {
-        this.newTodoItem.current.value = item.text;
-      }
-      return true;
-    });
+    this.setState({ currentItemId: id });
+    this.state.todos.filter((item) =>
+      item.id === id ? (this.newTodoItem.current.value = item.text) : null
+    );
   };
 
   deleteItem = (id) => {
     this.setState((prevState) => {
-      let deletedTodos = prevState.todos.filter((todo) => {
-        if (todo.id !== id) {
-          return todo;
-        }
-        return "";
-      });
       return {
-        todos: deletedTodos,
+        todos: (this.deletedTodos = prevState.todos.filter((todo) =>
+          todo.id !== id ? todo : null
+        )),
       };
     });
   };
 
   countTodos = () => this.state.todos.length;
 
-  showActiveTodos = () => {
-    this.setState((prevState) => {
-      let activeTodos = prevState.todos.filter((todo) => {
-        if (todo.completed === false) {
-          return todo;
-        }
-        return "";
-      });
-      return {
-        todos: activeTodos,
-      };
-    });
-  };
-
-  showCompletedTodos = () => {
-    this.setState((prevState) => {
-      let completedTodos = prevState.todos.filter((todo) => {
-        if (todo.completed === true) {
-          return todo;
-        }
-        return "";
-      });
-      return {
-        todos: completedTodos,
-      };
-    });
-  };
-
   toggleButton = (value) => this.setState({ showButton: value });
 
-  searchTodo = () => {
-    let searchValue = this.searchTodoItem.current.value.trim().toLowerCase();
-    this.state.todos.filter((todo) => {
-      if (todo.text.toLowerCase().includes(searchValue)) {
-        console.log(todo.text, searchValue);
-      }
-      return console.log("-----");
-    });
+  handleSearch = (search) => {
+    this.setState({ search });
+    if (!search) {
+      return console.log(this.state.todos);
+    }
+    console.log("------");
+    return this.state.todos.filter((todo) =>
+      todo.text.toLowerCase().includes(search.trim().toLowerCase())
+        ? console.log(todo.text, `${search}`)
+        : todo
+    );
+  };
+
+  statusSwitchHandler = (value) => {
+    this.setState(
+      (prevState) => (prevState.value = "hello from main component")
+    );
   };
 
   render() {
@@ -156,7 +132,6 @@ class Practice extends React.Component {
         handleChange={this.handleChange}
         deleteItem={this.deleteItem}
         textEdit={this.textEdit}
-        saveEditedText={this.saveEditedText}
         showButton={this.state.showButton}
         currentItemId={this.state.currentItemId}
         toggleButton={this.toggleButton}
@@ -166,69 +141,52 @@ class Practice extends React.Component {
       <div className="practice">
         <div className="item_insert">
           <input
-            className="inputTodoText"
+            className="input inputTodoText"
             type="text"
             ref={this.newTodoItem}
             placeholder="Add some new todo here..."
             required
           />
 
-          {this.state.showButton ? (
-            <button
-              style={
-                this.state.showButton
-                  ? this.saveStyle.show
-                  : this.saveStyle.hide
-              }
-              className="button saveEditedText"
-              onClick={() => {
-                this.saveEditedText(this.state.currentItemId);
-                this.toggleButton();
-              }}
-            >
-              <i className="far fa-save"> SAVE </i>
-            </button>
-          ) : (
-            <button
-              className="button add-button"
-              style={
-                this.showButton && this.state.currentItemId === this.item.id
-                  ? this.saveStyle.hide
-                  : this.saveStyle.show
-              }
-              type="button"
-              onClick={this.addTodo}
-            >
-              <i className="fas fa-plus-square"></i> ADD
-            </button>
-          )}
+          <>
+            {this.state.showButton ? (
+              <button
+                style={
+                  this.state.showButton
+                    ? this.showButtonStyle.show
+                    : this.showButtonStyle.hide
+                }
+                className="button saveEditedText"
+                onClick={() => {
+                  this.saveEditedText(this.state.currentItemId);
+                  this.toggleButton();
+                }}
+              >
+                <i className="far fa-save"> SAVE </i>
+              </button>
+            ) : (
+              <button
+                className="button add-button"
+                style={
+                  this.showButton && this.state.currentItemId === this.item.id
+                    ? this.showButtonStyle.hide
+                    : this.showButtonStyle.show
+                }
+                type="button"
+                onClick={this.addTodo}
+              >
+                <i className="fas fa-plus-square"></i> ADD
+              </button>
+            )}
+          </>
           <br />
-
-          <button
-            className="button"
-            onClick={() => {
-              this.showActiveTodos();
-            }}
-          >
-            Active
-          </button>
-          <button
-            className="button"
-            onClick={() => {
-              this.showCompletedTodos();
-              /* this.setState(() => {}); */
-            }}
-          >
-            Completed
-          </button>
-          <input
-            className="searchTodoText"
-            type="text"
-            ref={this.searchTodoItem}
-            onKeyDown={() => this.searchTodo()}
-            placeholder="Search..."
-            required
-          />
+          <>
+            <Status
+              state={this.state.todos}
+              statusSwitchHandler={this.statusSwitchHandler}
+            />
+          </>
+          <Search onSearch={this.handleSearch} />
         </div>
         <br />
         <div className="todo-items">{todoItems}</div>

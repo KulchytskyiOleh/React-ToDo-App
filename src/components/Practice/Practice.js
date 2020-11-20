@@ -1,41 +1,35 @@
 import React from "react";
 import TodoItem from "./TodoItem";
-import Pagination from "../Pagination/Pagination";
+// import Pagination from "../Pagination/Pagination";
 import Search from "../Search/Search";
 import Status from "../Status/Status";
 
 class Practice extends React.Component {
-  constructor(props) {
+  constructor({ addTodo, todosData }) {
     super();
     this.newTodoItem = React.createRef();
     this.searchTodoItem = React.createRef();
+
     this.state = {
       search: "",
       value: "",
+      status: "all",
       showButton: false,
       currentItemId: 0,
-      addTodos: props.addTodo,
-      todos: props.todosData,
-      filterChecked: false,
-      filterUnChecked: false,
+      addTodos: addTodo,
+      todos: todosData,
+      completed: "",
+      uncompleted: "",
     };
   }
 
-  showButtonStyle = {
-    hide: { display: "none" },
-    show: { display: "block" },
-  };
-
-  /*  todo.completed = todo.id === id ? !todo.completed : todo.completed; */
   handleChange = (id) => {
-    this.setState((prevState) => {
-      return {
-        todos: (this.updatedTodos = prevState.todos.map((todo) => {
-          todo.completed = todo.id === id ? !todo.completed : todo.completed;
-          return todo;
-        })),
-      };
-    });
+    this.setState((prevState) => ({
+      todos: prevState.todos.map((todo) => {
+        todo.completed = todo.id === id ? !todo.completed : todo.completed;
+        return todo;
+      }),
+    }));
   };
 
   addTodo = () => {
@@ -47,6 +41,7 @@ class Practice extends React.Component {
         success = false;
         messageErrors = "Please enter your todo";
       }
+
       prevState.todos.map((item) => {
         if (item.text === this.newTodoItem.current.value) {
           success = false;
@@ -54,6 +49,7 @@ class Practice extends React.Component {
         }
         return true;
       });
+
       if (success) {
         if (
           prevState.addTodos(this.newTodoItem.current.value, this.state.todos)
@@ -68,20 +64,16 @@ class Practice extends React.Component {
   };
 
   saveEditedText = (id) => {
-    this.setState((prevState) => {
-      prevState.todos.map((todo) => {
+    this.setState((prevState) => ({
+      todos: prevState.todos.map((todo) => {
         if (todo.id === id) {
           todo.text = this.newTodoItem.current.value;
           this.newTodoItem.current.value = "";
-          return todo;
         }
-        return true;
-      });
-      return {
-        todos: prevState.todos,
-        currentItemId: id,
-      };
-    });
+        return todo;
+      }),
+      currentItemId: id,
+    }));
   };
 
   textEdit = (id) => {
@@ -92,40 +84,55 @@ class Practice extends React.Component {
   };
 
   deleteItem = (id) => {
-    this.setState((prevState) => {
-      return {
-        todos: (this.deletedTodos = prevState.todos.filter((todo) =>
-          todo.id !== id ? todo : null
-        )),
-      };
-    });
+    this.setState((prevState) => ({
+      todos: prevState.todos.filter((todo) => (todo.id !== id ? todo : null)),
+    }));
   };
 
-  countTodos = () => this.state.todos.length;
-
-  toggleButton = (value) => this.setState({ showButton: value });
-
-  handleSearch = (search) => {
-    this.setState({ search });
-    if (!search) {
-      return console.log(this.state.todos);
-    }
-    console.log("------");
-    return this.state.todos.filter((todo) =>
-      todo.text.toLowerCase().includes(search.trim().toLowerCase())
-        ? console.log(todo.text, `${search}`)
-        : todo
-    );
+  showAllTodos = () => {
+    if (this.state.status === "uncompleted") {
+      this.state.todos.filter((item) =>
+        item.completed === false ? console.log(item) : null
+      );
+    } else if (this.state.status === "completed")
+      this.state.todos.filter((item) =>
+        item.completed === true ? console.log(item) : null
+      );
+    else if (this.state.status === "all") return console.log(this.state.todos);
   };
 
-  statusSwitchHandler = (value) => {
-    this.setState(
-      (prevState) => (prevState.value = "hello from main component")
-    );
+  componentDidUpdate() {
+    this.showAllTodos();
+    console.log("update");
+  }
+
+  toggleButton = (showButton) => this.setState({ showButton });
+
+  statusSwitchHandler = (status) => this.setState({ status });
+
+  handleSearch = (search) => this.setState({ search });
+
+  displayFilteredItems = () => {
+    return this.state.todos
+      .filter((item) =>
+        item.text.toLowerCase().includes(this.state.search.trim().toLowerCase())
+      )
+      .map((item) => (
+        <TodoItem
+          key={item.id}
+          item={item}
+          handleChange={this.handleChange}
+          deleteItem={this.deleteItem}
+          textEdit={this.textEdit}
+          showButton={this.state.showButton}
+          currentItemId={this.state.currentItemId}
+          toggleButton={this.toggleButton}
+        />
+      ));
   };
 
   render() {
-    const todoItems = this.state.todos.map((item) => (
+    /* const todoItems = this.state.todos.map((item) => (
       <TodoItem
         key={item.id}
         item={item}
@@ -135,8 +142,8 @@ class Practice extends React.Component {
         showButton={this.state.showButton}
         currentItemId={this.state.currentItemId}
         toggleButton={this.toggleButton}
-      />
-    ));
+      /> 
+    ));*/
     return (
       <div className="practice">
         <div className="item_insert">
@@ -151,12 +158,9 @@ class Practice extends React.Component {
           <>
             {this.state.showButton ? (
               <button
-                style={
-                  this.state.showButton
-                    ? this.showButtonStyle.show
-                    : this.showButtonStyle.hide
-                }
-                className="button saveEditedText"
+                className={`${"button"} ${"saveEditedText"} ${
+                  this.state.showButton ? "showButton" : "hideButton"
+                }`}
                 onClick={() => {
                   this.saveEditedText(this.state.currentItemId);
                   this.toggleButton();
@@ -166,12 +170,11 @@ class Practice extends React.Component {
               </button>
             ) : (
               <button
-                className="button add-button"
-                style={
+                className={`${"button"} ${"add-button"} ${
                   this.showButton && this.state.currentItemId === this.item.id
-                    ? this.showButtonStyle.hide
-                    : this.showButtonStyle.show
-                }
+                    ? "hideButton"
+                    : "showButton"
+                }`}
                 type="button"
                 onClick={this.addTodo}
               >
@@ -181,16 +184,14 @@ class Practice extends React.Component {
           </>
           <br />
           <>
-            <Status
-              state={this.state.todos}
-              statusSwitchHandler={this.statusSwitchHandler}
-            />
+            <Status statusSwitchHandler={this.statusSwitchHandler} />
           </>
+
           <Search onSearch={this.handleSearch} />
         </div>
-        <br />
-        <div className="todo-items">{todoItems}</div>
-        <Pagination countTodos={this.countTodos()} />
+
+        <div className="todo-items">{this.displayFilteredItems()}</div>
+        {/* <Pagination todos={this.state.todos} /> */}
       </div>
     );
   }

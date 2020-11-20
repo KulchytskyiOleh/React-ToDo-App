@@ -2,10 +2,10 @@ import React from "react";
 import "./Content.css";
 import Practice from "../Practice/Practice";
 
-function Content(props) {
+function Content({ todosData, addTodo }) {
   return (
     <main className="content">
-      <Practice todosData={props.todosData} addTodo={props.addTodo} />
+      <Practice todosData={todosData} addTodo={addTodo} />
     </main>
   );
 }

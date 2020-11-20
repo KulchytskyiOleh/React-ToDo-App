@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 
-function Search(props) {
-  
+export default function Search({ onSearch }) {
   const [value, setValue] = useState("");
   let searchTodo = (e) => setValue(e.target.value);
-
   return (
     <div>
       <input
@@ -12,13 +10,11 @@ function Search(props) {
         type="text"
         value={value}
         onChange={searchTodo}
-        onKeyDown={() => props.onSearch(value)}
-        /*         onKeyDown={(e) => (e.key === "Enter" ? props.onSearch(value) : null)} */
+        onKeyDown={() => onSearch(value)}
+        // onKeyDown={(e) => (e.key === "Enter" ? onSearch(value) : null)}
         placeholder="  Search..."
         required
       />
     </div>
   );
 }
-
-export default Search;

@@ -80,6 +80,12 @@
   margin-right: 15px;
   border-radius: 5px;
 }
+.showButton {
+  display: block;
+}
+.hideButton {
+  display: none;
+}
 .saveEditedText {
   background-color: #30ac30;
 }
@@ -106,4 +112,17 @@ div.Paginate > ul > li > a {
   border-radius: 5px;
   background-color: lightblue;
   color: black;
+}
+p.todoText {
+  color: black;
+  padding-left: 15px;
+}
+p.Completed {
+  color: green;
+  font-style: italic;
+  text-decoration: line-through;
+}
+.statusSelect {
+  margin-right: 15px;
+  padding: 10px;
 }

@@ -6,7 +6,7 @@ const todosData = [
 ];
 export default todosData;
 
-export let addTodo = (todosText, todos) => {
+export let addTodo = (todos, todosText) => {
   let newTodo = {
     id: Date.now(),
     text: todosText,

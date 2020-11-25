@@ -1,10 +1,10 @@
 import React from "react";
-import TodoItem from "./TodoItem";
+import TodoItemsList from "./TodoItemsList";
 // import Pagination from "../Pagination/Pagination";
 import Search from "../Search/Search";
 import Status from "../Status/Status";
 
-class Practice extends React.Component {
+export default class Practice extends React.Component {
   constructor({ addTodo, todosData }) {
     super();
     this.newTodoItem = React.createRef();
@@ -52,7 +52,7 @@ class Practice extends React.Component {
 
       if (success) {
         if (
-          prevState.addTodos(this.newTodoItem.current.value, this.state.todos)
+          prevState.addTodos(this.state.todos,this.newTodoItem.current.value)
         ) {
           this.newTodoItem.current.value = "";
         }
@@ -89,112 +89,72 @@ class Practice extends React.Component {
     }));
   };
 
-  showAllTodos = () => {
-    if (this.state.status === "uncompleted") {
-      this.state.todos.filter((item) =>
-        item.completed === false ? console.log(item) : null
-      );
-    } else if (this.state.status === "completed")
-      this.state.todos.filter((item) =>
-        item.completed === true ? console.log(item) : null
-      );
-    else if (this.state.status === "all") return console.log(this.state.todos);
-  };
-
-  componentDidUpdate() {
-    this.showAllTodos();
-    console.log("update");
-  }
-
   toggleButton = (showButton) => this.setState({ showButton });
 
   statusSwitchHandler = (status) => this.setState({ status });
 
   handleSearch = (search) => this.setState({ search });
 
-  displayFilteredItems = () => {
-    return this.state.todos
-      .filter((item) =>
-        item.text.toLowerCase().includes(this.state.search.trim().toLowerCase())
-      )
-      .map((item) => (
-        <TodoItem
-          key={item.id}
-          item={item}
-          handleChange={this.handleChange}
-          deleteItem={this.deleteItem}
-          textEdit={this.textEdit}
-          showButton={this.state.showButton}
-          currentItemId={this.state.currentItemId}
-          toggleButton={this.toggleButton}
-        />
-      ));
-  };
-
   render() {
-    /* const todoItems = this.state.todos.map((item) => (
-      <TodoItem
-        key={item.id}
-        item={item}
-        handleChange={this.handleChange}
-        deleteItem={this.deleteItem}
-        textEdit={this.textEdit}
-        showButton={this.state.showButton}
-        currentItemId={this.state.currentItemId}
-        toggleButton={this.toggleButton}
-      /> 
-    ));*/
     return (
       <div className="practice">
-        <div className="item_insert">
-          <input
-            className="input inputTodoText"
-            type="text"
-            ref={this.newTodoItem}
-            placeholder="Add some new todo here..."
-            required
-          />
-
+        <div className="practice_Top">
           <>
-            {this.state.showButton ? (
-              <button
-                className={`${"button"} ${"saveEditedText"} ${
-                  this.state.showButton ? "showButton" : "hideButton"
-                }`}
-                onClick={() => {
-                  this.saveEditedText(this.state.currentItemId);
-                  this.toggleButton();
-                }}
-              >
-                <i className="far fa-save"> SAVE </i>
-              </button>
-            ) : (
-              <button
-                className={`${"button"} ${"add-button"} ${
-                  this.showButton && this.state.currentItemId === this.item.id
-                    ? "hideButton"
-                    : "showButton"
-                }`}
-                type="button"
-                onClick={this.addTodo}
-              >
-                <i className="fas fa-plus-square"></i> ADD
-              </button>
-            )}
+            <input
+              className="input inputTodoText"
+              type="text"
+              ref={this.newTodoItem}
+              placeholder="Add some new todo here..."
+              required
+            />
+            <>
+              {this.state.showButton ? (
+                <button
+                  className={`${"button"} ${"saveEditedText"} ${
+                    this.state.showButton ? "showButton" : "hideButton"
+                  }`}
+                  onClick={() => {
+                    this.saveEditedText(this.state.currentItemId);
+                    this.toggleButton();
+                  }}
+                >
+                  <i className="far fa-save"> SAVE </i>
+                </button>
+              ) : (
+                <button
+                  className={`${"button"} ${"add-button"} ${
+                    this.showButton && this.state.currentItemId === this.item.id
+                      ? "hideButton"
+                      : "showButton"
+                  }`}
+                  type="button"
+                  onClick={this.addTodo}
+                >
+                  <i className="fas fa-plus-square"></i> ADD
+                </button>
+              )}
+            </>
           </>
-          <br />
           <>
             <Status statusSwitchHandler={this.statusSwitchHandler} />
+            <Search onSearch={this.handleSearch} />
           </>
-
-          <Search onSearch={this.handleSearch} />
         </div>
-
-        <div className="todo-items">{this.displayFilteredItems()}</div>
-        {/* <Pagination todos={this.state.todos} /> */}
+        <div className="main_Practice">
+          <TodoItemsList
+            handleChange={this.handleChange}
+            deleteItem={this.deleteItem}
+            textEdit={this.textEdit}
+            showButton={this.state.showButton}
+            currentItemId={this.state.currentItemId}
+            toggleButton={this.toggleButton}
+            todos={this.state.todos}
+            search={this.state.search}
+            status={this.state.status}
+          />
+        </div>
       </div>
+      // <Pagination todos={this.state.todos} />
     );
   }
 }
-
-export default Practice;

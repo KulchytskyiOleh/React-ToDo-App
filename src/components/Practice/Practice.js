@@ -3,20 +3,23 @@ import TodoItemsList from "./TodoItemsList";
 // import Pagination from "../Pagination/Pagination";
 import Search from "../Search/Search";
 import Status from "../Status/Status";
+import Sidebar from "../Sidebar/Sidebar";
 
 export default class Practice extends React.Component {
-  constructor({ addTodo, todosData }) {
+  constructor({ todosData }) {
     super();
     this.newTodoItem = React.createRef();
     this.searchTodoItem = React.createRef();
 
     this.state = {
+      text: "",
       search: "",
       value: "",
       status: "all",
       showButton: false,
       currentItemId: 0,
-      addTodos: addTodo,
+      showSideBar: false,
+      showModal: false,
       todos: todosData,
       completed: "",
       uncompleted: "",
@@ -32,35 +35,40 @@ export default class Practice extends React.Component {
     }));
   };
 
+  dateCreate = () => {};
+
+  addNewTodo = () => {
+    const { todos } = this.state;
+    let newTodo = {
+      id: Date.now(),
+      text: this.newTodoItem.current.value,
+      completed: false,
+      date: new Date(),
+    };
+    this.setState({ todos: [...todos, newTodo] });
+    this.newTodoItem.current.value = "";
+  };
+
   addTodo = () => {
-    this.setState((prevState) => {
-      let success = true;
-      let messageErrors = "";
-
-      if (this.newTodoItem.current.value.length === 0) {
+    let success = true;
+    let messageErrors = "";
+    if (this.newTodoItem.current.value.length === 0) {
+      success = false;
+      messageErrors = "Please enter your todo";
+    }
+    this.state.todos.map((item) => {
+      if (item.text === this.newTodoItem.current.value) {
         success = false;
-        messageErrors = "Please enter your todo";
-      }
-
-      prevState.todos.map((item) => {
-        if (item.text === this.newTodoItem.current.value) {
-          success = false;
-          messageErrors = "This element already exists";
-        }
-        return true;
-      });
-
-      if (success) {
-        if (
-          prevState.addTodos(this.state.todos,this.newTodoItem.current.value)
-        ) {
-          this.newTodoItem.current.value = "";
-        }
-      } else {
-        alert(messageErrors);
+        messageErrors = "This element already exists";
       }
       return true;
     });
+    if (success) {
+      return this.addNewTodo();
+    } else {
+      alert(messageErrors);
+    }
+    return true;
   };
 
   saveEditedText = (id) => {
@@ -89,6 +97,8 @@ export default class Practice extends React.Component {
     }));
   };
 
+  // sidebarToggleHandler = () => {};
+
   toggleButton = (showButton) => this.setState({ showButton });
 
   statusSwitchHandler = (status) => this.setState({ status });
@@ -98,6 +108,10 @@ export default class Practice extends React.Component {
   render() {
     return (
       <div className="practice">
+        <Sidebar
+          showSideBar={this.state.showSideBar}
+          showModal={this.state.showModal}
+        />
         <div className="practice_Top">
           <>
             <input

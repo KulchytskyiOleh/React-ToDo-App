@@ -8,11 +8,14 @@
   background-color: silver;
   height: auto;
   padding-bottom: 1.5%;
+  position: relative;
 }
 .Practice {
+  position: absolute;
   background-color: #a70e0e;
   padding: 5px;
   height: auto;
+  z-index: 1;
 }
 .todo-items {
   margin-bottom: 10px;
@@ -90,7 +93,7 @@
   background-color: #30ac30;
 }
 .countTodosButton {
-  background-color: red;
+  background-color: #ff0000;
   color: #05668d;
 }
 div.Paginate {
@@ -118,11 +121,44 @@ p.todoText {
   padding-left: 15px;
 }
 p.Completed {
-  color: green;
+  color: #008000;
   font-style: italic;
   text-decoration: line-through;
 }
 .statusSelect {
   margin-right: 15px;
   padding: 10px;
+}
+
+button.menu-bars {
+  margin: 5px;
+  padding: 5px;
+}
+
+.sidebar.active {
+  position: absolute;
+  display: block;
+  background-color: #d3d3d3;
+  padding: 5px;
+  height: 300px;
+  width: 300px;
+  left: 0;
+  transition: 350ms;
+}
+.sidebar {
+  display: none;
+  position: fixed;
+  top: 10;
+  left: -100%;
+  transition: 850ms;
+}
+.sidebar-items {
+  display: grid;
+  align-self: center;
+  justify-content: center;
+  margin: 5px;
+}
+.sidebar-items > button {
+  margin: 5px;
+  padding: 5px;
 }

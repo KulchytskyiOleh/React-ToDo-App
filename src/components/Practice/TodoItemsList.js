@@ -12,20 +12,21 @@ export default function TodoItemsList({
   search,
   status,
 }) {
+
+ 
   return todos
     .filter((item) =>
       item.text.toLowerCase().includes(search.trim().toLowerCase())
     )
     .filter((item) => {
       if (status === "all") return true;
-      else if (status === "completed") {
-        if (item.completed === true) return true;
-      } else if (status === "uncompleted") {
-        if (item.completed === false) return true;
+      else if (status === "completed" && item.completed === true) {
+        /*   if (item.completed === true) */ return true;
+      } else if (status === "uncompleted" && item.completed === false) {
+        /*  if (item.completed === false) */ return true;
       }
       return false;
     })
-
     .map((item) => (
       <TodoItem
         key={item.id}

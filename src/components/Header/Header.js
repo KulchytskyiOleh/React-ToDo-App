@@ -1,10 +1,14 @@
 import React from "react";
 import "./Header.css";
+// import Theme from "./Theme";
 
-let Header = () => {
+let Header = ({ theme, setTheme }) => {
   return (
     <header className="header">
-      <p>React ToDo App</p>
+      <>
+        <p>React ToDo App</p>
+        {/* <Theme themeHandler={theme} themeSwitchHandler={setTheme} /> */}
+      </>
     </header>
   );
 };

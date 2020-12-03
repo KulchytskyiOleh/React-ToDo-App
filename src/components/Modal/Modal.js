@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRef } from "react";
 
 import "./Modal.css";
 
@@ -10,13 +11,24 @@ function Modal({ modal, setModal }) {
   let userNameInputHandler = (e) => setUserName(e.target.value);
   let messageInputHandler = (e) => setMessage(e.target.value);
   let emailInputHandler = (e) => setEmail(e.target.value);
+  const userNameInput = useRef(null);
 
   let submitHandler = () => {
-    console.log(`${userName} ${message} ${email}`);
-    setUserName("");
-    setMessage("");
-    setEmail("");
+    if (userName === "" || message === "" || email === "") {
+      alert("please fill in all the lines");
+    } else {
+      let userData = {
+        userName,
+        message,
+        email,
+      };
+      localStorage.setItem(`${userName}`, JSON.stringify(userData));
+      setUserName("");
+      setMessage("");
+      setEmail("");
+    }
   };
+
   let resetHandler = () => {
     setUserName("");
     setMessage("");
@@ -26,6 +38,9 @@ function Modal({ modal, setModal }) {
   let closeModalHandler = () => {
     setModal(!modal);
   };
+  useEffect(() => {
+    userNameInput.current.focus();
+  }, [userNameInput]);
 
   return (
     <div className="Modal">
@@ -34,6 +49,7 @@ function Modal({ modal, setModal }) {
           <label>
             Username:
             <input
+              ref={userNameInput}
               required
               value={userName}
               type="text"

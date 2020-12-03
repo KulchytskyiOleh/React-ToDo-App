@@ -1,14 +1,15 @@
 import React from "react";
 import TodoItemsList from "./TodoItemsList";
-// import Pagination from "../Pagination/Pagination";
+import Pagination from "../Pagination/Pagination";
 import Search from "../Search/Search";
-import Status from "../Status/Status";
+// import Status from "../Status/Status";
 import Sidebar from "../Sidebar/Sidebar";
 
 export default class Practice extends React.Component {
   constructor({ todosData }) {
     super();
     this.newTodoItem = React.createRef();
+    this.editTodoItem = React.createRef();
     this.searchTodoItem = React.createRef();
 
     this.state = {
@@ -43,7 +44,7 @@ export default class Practice extends React.Component {
       id: Date.now(),
       text: this.newTodoItem.current.value,
       completed: false,
-      date: new Date(),
+      // date: new Date(),
     };
     this.setState({ todos: [...todos, newTodo] });
     this.newTodoItem.current.value = "";
@@ -89,6 +90,7 @@ export default class Practice extends React.Component {
     this.state.todos.filter((item) =>
       item.id === id ? (this.newTodoItem.current.value = item.text) : null
     );
+    this.newTodoItem.current.focus();
   };
 
   deleteItem = (id) => {
@@ -97,18 +99,22 @@ export default class Practice extends React.Component {
     }));
   };
 
-  // sidebarToggleHandler = () => {};
-
   toggleButton = (showButton) => this.setState({ showButton });
 
   statusSwitchHandler = (status) => this.setState({ status });
 
   handleSearch = (search) => this.setState({ search });
 
+  componentDidUpdate() {
+    // this.newTodoItem.current.focus();
+  }
+
   render() {
     return (
       <div className="practice">
         <Sidebar
+          status={this.state.status}
+          statusSwitchHandler={this.statusSwitchHandler}
           showSideBar={this.state.showSideBar}
           showModal={this.state.showModal}
         />
@@ -150,7 +156,7 @@ export default class Practice extends React.Component {
             </>
           </>
           <>
-            <Status statusSwitchHandler={this.statusSwitchHandler} />
+            {/* <Status statusSwitchHandler={this.statusSwitchHandler} /> */}
             <Search onSearch={this.handleSearch} />
           </>
         </div>
@@ -167,8 +173,8 @@ export default class Practice extends React.Component {
             status={this.state.status}
           />
         </div>
+        <Pagination todos={this.state.todos} />
       </div>
-      // <Pagination todos={this.state.todos} />
     );
   }
 }

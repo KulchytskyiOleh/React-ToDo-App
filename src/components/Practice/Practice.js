@@ -9,8 +9,8 @@ export default class Practice extends React.Component {
   constructor({ todosData }) {
     super();
     this.newTodoItem = React.createRef();
-    this.editTodoItem = React.createRef();
-    this.searchTodoItem = React.createRef();
+    // this.editTodoItem = React.createRef();
+    // this.searchTodoItem = React.createRef();
 
     this.state = {
       text: "",
@@ -22,8 +22,10 @@ export default class Practice extends React.Component {
       showSideBar: false,
       showModal: false,
       todos: todosData,
-      completed: "",
-      uncompleted: "",
+      // completed: "",
+      // uncompleted: "",
+      itemsPerPage: 4,
+      currentPage: 1,
     };
   }
 
@@ -104,6 +106,7 @@ export default class Practice extends React.Component {
   statusSwitchHandler = (status) => this.setState({ status });
 
   handleSearch = (search) => this.setState({ search });
+  currentPageHandler = (currentPage) => this.setState({ currentPage });
 
   componentDidUpdate() {
     // this.newTodoItem.current.focus();
@@ -171,9 +174,16 @@ export default class Practice extends React.Component {
             todos={this.state.todos}
             search={this.state.search}
             status={this.state.status}
+            currentPage={this.state.currentPage}
+            itemsPerPage={this.state.itemsPerPage}
           />
         </div>
-        <Pagination todos={this.state.todos} />
+        <Pagination
+          todos={this.state.todos}
+          itemsPerPage={this.state.itemsPerPage}
+          currentPage={this.state.currentPage}
+          currentPageHandler={this.currentPageHandler}
+        />
       </div>
     );
   }

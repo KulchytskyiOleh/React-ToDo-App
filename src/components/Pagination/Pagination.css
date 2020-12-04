@@ -1,0 +1,28 @@
+.Paginate {
+  display: none;
+}
+.Active {
+  display: block;
+}
+
+.Paginate > ul {
+  display: inline-block;
+  margin-left: 25px;
+  grid-template-rows: auto;
+}
+.Paginate > ul > li {
+  float: left;
+  margin-left: 5px;
+}
+
+.Paginate > ul > li > button {
+  margin-right: auto;
+  border-radius: 3px;
+  padding: 3px;
+  background-color: lightblue;
+  color: #000000;
+}
+.Paginate > ul > li > button.ActivePage {
+  background-color: #0000ff;
+  color: #ffffff;
+}

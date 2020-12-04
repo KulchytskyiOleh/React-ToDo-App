@@ -1,46 +1,38 @@
-import React from "react";
-
-function Pagination({ todos }) {
+import React /* useState  */ from "react";
+import "./Pagination.css";
+function Pagination({ todos, itemsPerPage, currentPage, currentPageHandler }) {
   let numberOfPage = [];
-  let itemsPerPage = 4;
   let numberOfItems = todos.length;
   let paginateItemsCounter = Math.ceil(numberOfItems / itemsPerPage);
-
-  numberOfPage.style = {
-    hide: { display: "none" },
-    show: { display: "block" },
-  };
 
   for (let i = 1; i <= paginateItemsCounter; i++) {
     numberOfPage.push(i);
   }
-  let pageHandler = (e) => console.log(e.target.name);
-  /* if (todos.length > itemsPerPage) {
-      todos.map((item, index) => {
-        // let itemNumber = ++index;
-        console.log(item, index + 1);
-      });
-    }
-    console.log(e.target.value);
-  }; */
+
+  // if (currentPage) {
+  //   todos.map((item, index) =>
+  //     Math.ceil(++index / itemsPerPage) === currentPage
+  //       ? console.log(item)
+  //       : null
+  //   );
+  // }
+  // console.log("--------------");
 
   return (
-    <div
-      className="Paginate"
-      style={
-        numberOfPage.length <= 1
-          ? numberOfPage.style.hide
-          : numberOfPage.style.show
-      }
-    >
+    <div className={numberOfPage.length <= 1 ? "Paginate" : "Paginate Active"}>
       <ul>
+        {/* <li>prev</li> */}
         {numberOfPage.map((number) => (
           <li key={number}>
-            <a href="#/" name={number} onClick={pageHandler}>
+            <button
+              className={currentPage === number ? "ActivePage" : null}
+              onClick={() => currentPageHandler(number)}
+            >
               {number}
-            </a>
+            </button>
           </li>
         ))}
+        {/* <li>next</li> */}
       </ul>
     </div>
   );

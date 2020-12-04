@@ -9,12 +9,16 @@ export default function Sidebar({
 }) {
   const [sidebar, setSidebar] = useState(showSideBar);
   const [modal, setModal] = useState(showModal);
-  let sidebarToggleHandler = () => setSidebar(() => !sidebar);
-  let modalToggleHandler = () => setModal(() => !modal);
-  const allTodos = useRef(null);
   const uncompletedTodos = useRef(null);
   const completedTodos = useRef(null);
+  const allTodos = useRef(null);
+  const [displayAllTodos, setDisplayAllTodos] = useState(true);
+  let sidebarToggleHandler = () => setSidebar(() => !sidebar);
+  let modalToggleHandler = () => setModal(() => !modal);
   // let statusHandler = (e) => statusSwitchHandler(e.target.value);
+  let allTodosToggleHandler = () => {
+    setDisplayAllTodos(!displayAllTodos);
+  };
 
   useEffect(() => {
     if (status === "completed") {
@@ -22,7 +26,7 @@ export default function Sidebar({
     } else if (status === "uncompleted") {
       return setSidebar(null);
     } else if (status === "all") {
-      return;
+      return setSidebar(null);
     }
   }, [status]);
 
@@ -35,7 +39,6 @@ export default function Sidebar({
         onClick={() => {
           sidebarToggleHandler();
           setModal("");
-          statusSwitchHandler(allTodos.current.value);
         }}
       >
         <i className={sidebar ? "fa fa-times" : "fa fa-bars"}></i>
@@ -45,16 +48,28 @@ export default function Sidebar({
           <button
             value="uncompleted"
             ref={uncompletedTodos}
-            // onClick={statusHandler}
-            onClick={() => statusSwitchHandler(uncompletedTodos.current.value)}
+            onClick={() => {
+              statusSwitchHandler(
+                displayAllTodos
+                  ? uncompletedTodos.current.value
+                  : allTodos.current.value
+              );
+              allTodosToggleHandler();
+            }}
           >
             Active todos
           </button>
           <button
             value="completed"
             ref={completedTodos}
-            // onClick={statusHandler}
-            onClick={() => statusSwitchHandler(completedTodos.current.value)}
+            onClick={() => {
+              statusSwitchHandler(
+                displayAllTodos
+                  ? completedTodos.current.value
+                  : allTodos.current.value
+              );
+              allTodosToggleHandler();
+            }}
           >
             Completed todos
           </button>

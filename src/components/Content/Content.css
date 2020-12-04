@@ -96,26 +96,7 @@
   background-color: #ff0000;
   color: #05668d;
 }
-div.Paginate {
-  display: grid;
-}
 
-div.Paginate > ul {
-  margin-left: 15px;
-  grid-template-rows: auto;
-}
-div.Paginate > ul > li {
-  float: left;
-  margin-left: 5px;
-}
-
-div.Paginate > ul > li > a {
-  padding: 4px;
-  margin-right: auto;
-  border-radius: 5px;
-  background-color: lightblue;
-  color: black;
-}
 p.todoText {
   color: black;
   padding-left: 15px;

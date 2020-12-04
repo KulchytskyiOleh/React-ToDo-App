@@ -11,9 +11,18 @@ export default function TodoItemsList({
   currentItemId,
   search,
   status,
+  currentPage,
+  itemsPerPage,
 }) {
+  // if (currentPage) {
+  //   todos.map((item, index) =>
+  //     Math.ceil(++index / itemsPerPage) === currentPage
+  //       ? console.log(item)
+  //       : null
+  //   );
+  // }
+  // console.log("--------------");
 
- 
   return todos
     .filter((item) =>
       item.text.toLowerCase().includes(search.trim().toLowerCase())
@@ -21,11 +30,15 @@ export default function TodoItemsList({
     .filter((item) => {
       if (status === "all") return true;
       else if (status === "completed" && item.completed === true) {
-        /*   if (item.completed === true) */ return true;
+        return true;
       } else if (status === "uncompleted" && item.completed === false) {
-        /*  if (item.completed === false) */ return true;
+        return true;
       }
       return false;
+    })
+    .filter((item, index) => {
+      if (currentPage && Math.ceil(++index / itemsPerPage) === currentPage)
+        return item;
     })
     .map((item) => (
       <TodoItem

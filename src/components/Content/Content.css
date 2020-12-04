@@ -5,7 +5,7 @@
   padding: 0;
 }
 .content {
-  background-color: silver;
+  background-color: #c0c0c0;
   height: auto;
   padding-bottom: 1.5%;
   position: relative;
@@ -73,16 +73,14 @@
 .inputTodoText {
   background-color: #eae2b7;
 }
-.inputSearchTodoText {
-  background-color: #d5dfff;
-  padding: 10px;
-}
 .button {
   background-color: #fca311;
   padding: 10px 20px;
   margin-right: 15px;
   border-radius: 5px;
+  cursor: pointer;
 }
+
 .showButton {
   display: block;
 }
@@ -98,7 +96,7 @@
 }
 
 p.todoText {
-  color: black;
+  color: #000000;
   padding-left: 15px;
 }
 p.Completed {
@@ -106,40 +104,5 @@ p.Completed {
   font-style: italic;
   text-decoration: line-through;
 }
-.statusSelect {
-  margin-right: 15px;
-  padding: 10px;
-}
-
-button.menu-bars {
-  margin: 5px;
-  padding: 5px;
-}
-
-.sidebar.active {
-  position: absolute;
-  display: block;
-  background-color: #d3d3d3;
-  padding: 5px;
-  height: 300px;
-  width: 300px;
-  left: 0;
-  transition: 350ms;
-}
-.sidebar {
-  display: none;
-  position: fixed;
-  top: 10;
-  left: -100%;
-  transition: 850ms;
-}
-.sidebar-items {
-  display: grid;
-  align-self: center;
-  justify-content: center;
-  margin: 5px;
-}
-.sidebar-items > button {
-  margin: 5px;
-  padding: 5px;
-}
+/* 
+} */

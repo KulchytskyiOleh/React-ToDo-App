@@ -6,8 +6,9 @@
   display: grid;
   height: 200px;
   width: 300px;
-  top: 120px;
-  left: 320px;
+  left: 50%;
+  top: 55%;
+  transform: translate(-50%, -50%);
   z-index: 40;
 }
 .modalWrapper {

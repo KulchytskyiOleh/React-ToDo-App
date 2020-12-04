@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./Sidebar";
+import "./Sidebar.css";
 import Modal from "../Modal/Modal";
 export default function Sidebar({
   showSideBar,

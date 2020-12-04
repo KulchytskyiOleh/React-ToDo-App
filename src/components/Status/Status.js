@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./Status.css";
 export default function Status({ statusSwitchHandler }) {
   let statusHandler = (e) => statusSwitchHandler(e.target.value);
   return (

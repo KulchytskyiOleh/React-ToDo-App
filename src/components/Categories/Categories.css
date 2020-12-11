@@ -1,0 +1,19 @@
+.categories {
+  width: 230px;
+}
+.categoryItemWrapper {
+  margin: 10px;
+  padding: 5px 10px;
+  background-color: #008080;
+}
+.categoryItem {
+  display: grid;
+  grid-template-columns: 80% 10% 10%;
+}
+
+.showSaveButton {
+  display: block;
+}
+.hideSaveButton {
+  display: none;
+}

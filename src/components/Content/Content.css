@@ -4,6 +4,9 @@
   margin: 0;
   padding: 0;
 }
+button {
+  cursor: pointer;
+}
 .content {
   background-color: #c0c0c0;
   height: auto;
@@ -20,42 +23,50 @@
 .todo-items {
   margin-bottom: 10px;
 }
+.main_Practice {
+  width: 700px;
+  margin: auto;
+}
 .todo-item {
   background-color: #f8fc11;
   margin: 15px;
   padding: 1%;
+  /* width: 50%; */
   border-radius: 15px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 5% 80% 10% 5%;
   align-items: center;
   margin-bottom: 20px;
+}
+.checkBoxItem {
+  justify-self: center;
 }
 
 .todo-item:nth-child(odd) {
   background-color: #fca311;
 }
 .todo-item > p {
-  color: black;
+  color: #000000;
+  justify-self: start;
   padding-left: 15px;
 }
+.textEdit {
+  justify-self: start;
+
+  padding: 6px;
+  /* margin-right: 10px; */
+  border-radius: 9px;
+  background-color: #c0c0c0;
+}
+
 .todoItemDelete {
   color: #ffffff;
   background-color: #ff0000;
-  padding: 2px 4px;
+  /* padding: 2px 4px; */
   border: none;
   border-radius: 5px;
-  position: absolute;
-  cursor: pointer;
-  right: 3%;
-}
-
-.textEdit {
-  position: absolute;
-  cursor: pointer;
-  padding: 6px;
-  margin-right: 10px;
-  right: 5%;
-  border-radius: 10px;
-  background-color: #c0c0c0;
+  align-self: stretch;
+  justify-self: stretch;
 }
 
 .practice_Top {
@@ -78,7 +89,6 @@
   padding: 10px 20px;
   margin-right: 15px;
   border-radius: 5px;
-  cursor: pointer;
 }
 
 .showButton {
@@ -104,5 +114,3 @@ p.Completed {
   font-style: italic;
   text-decoration: line-through;
 }
-/* 
-} */

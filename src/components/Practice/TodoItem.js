@@ -14,7 +14,7 @@ export default function TodoItem({
   return (
     <div className="todo-item">
       <input
-        id="inp"
+        className="checkBoxItem"
         type="checkbox"
         checked={item.completed}
         onChange={() => handleChange(item.id)}

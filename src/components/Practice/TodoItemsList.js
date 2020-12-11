@@ -8,21 +8,11 @@ export default function TodoItemsList({
   toggleButton,
   deleteItem,
   textEdit,
-  currentItemId,
   search,
   status,
   currentPage,
   itemsPerPage,
 }) {
-  // if (currentPage) {
-  //   todos.map((item, index) =>
-  //     Math.ceil(++index / itemsPerPage) === currentPage
-  //       ? console.log(item)
-  //       : null
-  //   );
-  // }
-  // console.log("--------------");
-
   return todos
     .filter((item) =>
       item.text.toLowerCase().includes(search.trim().toLowerCase())
@@ -48,7 +38,7 @@ export default function TodoItemsList({
         deleteItem={deleteItem}
         textEdit={textEdit}
         showButton={showButton}
-        currentItemId={currentItemId}
+        // currentItemId={currentItemId}
         toggleButton={toggleButton}
       />
     ));

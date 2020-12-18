@@ -5,6 +5,7 @@
   padding: 0;
 }
 button {
+  border: none;
   cursor: pointer;
 }
 .content {
@@ -13,60 +14,100 @@ button {
   padding-bottom: 1.5%;
   position: relative;
 }
-.Practice {
+/* .Practice {
   position: absolute;
   background-color: #a70e0e;
   padding: 5px;
   height: auto;
   z-index: 1;
-}
-.todo-items {
-  margin-bottom: 10px;
-}
+} */
+/* .todo-items {
+  margin-bottom: 30px;
+} */
 .main_Practice {
-  width: 700px;
+  max-width: 1920px;
   margin: auto;
+  display: grid;
+  gap: 1%;
+  grid-template-columns: 25% 70% 5%;
+  grid-auto-columns: auto;
+  grid-auto-rows: auto;
+  grid-template-areas: "categoryList todoList .";
+}
+.TodoItemsList {
+  grid-area: todoList;
+  max-width: 75%;
+  grid-auto-rows: auto;
 }
 .todo-item {
   background-color: #f8fc11;
-  margin: 15px;
-  padding: 1%;
-  /* width: 50%; */
+  margin: 20px 15px;
+  padding: 1.5%;
   border-radius: 15px;
   display: grid;
-  grid-template-columns: 5% 80% 10% 5%;
+  grid-template-columns: 0.5fr 6.5fr repeat(2, 0.5fr);
   align-items: center;
-  margin-bottom: 20px;
+  gap: 1%;
+  /* grid-auto-columns: auto;
+  grid-auto-rows: auto; */
+}
+.todo-item:nth-child(odd) {
+  background-color: #fca311;
 }
 .checkBoxItem {
   justify-self: center;
 }
-
-.todo-item:nth-child(odd) {
-  background-color: #fca311;
+.todoItemInput {
+  min-width: 50px;
 }
 .todo-item > p {
   color: #000000;
   justify-self: start;
+  word-break: break-word;
   padding-left: 15px;
+  /* word-break: break-all; */
 }
 .textEdit {
-  justify-self: start;
-
   padding: 6px;
-  /* margin-right: 10px; */
-  border-radius: 9px;
+  border-radius: 5px;
   background-color: #c0c0c0;
+  border: 1px solid #000000;
+  justify-self: center;
+  /* align-self: center; */
+  /* justify-self: stretch; */
+  /* align-self: stretch; */
+}
+.textEdit:hover {
+  background-color: #5e5e5e;
+  color: #ffffff;
+  /* border: 1px solid #000000; */
+}
+.saveEditedText {
+  /* justify-self: stretch; */
+  background-color: #30ac30;
+  justify-self: center;
+  padding: 6px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+}
+.showButton {
+  display: block;
+}
+.hideButton {
+  display: none;
 }
 
 .todoItemDelete {
   color: #ffffff;
   background-color: #ff0000;
-  /* padding: 2px 4px; */
-  border: none;
+  border: 1px solid #000000;
+  padding: 6px;
   border-radius: 5px;
-  align-self: stretch;
-  justify-self: stretch;
+  justify-self: center;
+}
+.todoItemDelete:hover {
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .practice_Top {
@@ -91,15 +132,6 @@ button {
   border-radius: 5px;
 }
 
-.showButton {
-  display: block;
-}
-.hideButton {
-  display: none;
-}
-.saveEditedText {
-  background-color: #30ac30;
-}
 .countTodosButton {
   background-color: #ff0000;
   color: #05668d;

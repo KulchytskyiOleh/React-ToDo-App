@@ -11,25 +11,27 @@ export default class Practice extends React.Component {
     this.newTodoItem = React.createRef();
     // this.editTodoItem = React.createRef();
     // this.searchTodoItem = React.createRef();
+    // value: "",
+    // completed: "",
+    // uncompleted: "",
 
     this.state = {
       text: "",
       search: "",
-      // value: "",
       status: "all",
-      showButton: false,
       currentItemId: 0,
       currentCategoryId: 0,
+      showButton: false,
       showSideBar: false,
       showModal: false,
       showCategorySaveButton: false,
       todos: todosData,
-      // completed: "",
-      // uncompleted: "",
-      itemsPerPage: 4,
-      // newCategory: "",
-      currentPage: 1,
       categories: Categories,
+      itemsPerPage: 4,
+      currentPage: 1,
+      // newCategoryLabel: "",
+      currentCategory: "My todos",
+      // currentCategory: "",
     };
   }
 
@@ -50,6 +52,7 @@ export default class Practice extends React.Component {
       label: labelText,
     };
     this.setState({ categories: [...categories, newCategory] });
+    this.setState(() => ({ currentCategory: newCategory.label }));
   };
 
   saveEditedCategoryItem = (id, editedText) => {
@@ -60,15 +63,26 @@ export default class Practice extends React.Component {
         }
         return item;
       }),
+      todos: prevState.todos.map((todo) => {
+        if (prevState.currentCategory === todo.category) {
+          todo.category = editedText;
+        }
+        return todo;
+      }),
       currentCategoryId: id,
+      currentCategory: editedText,
     }));
   };
 
   editCategoryItem = (id, editedText) => {
     this.setState({ currentCategoryId: id });
-    this.state.categories.filter((item) =>
-      item.id === id ? (editedText = item.label) : null
-    );
+    this.state.categories.filter((item) => {
+      if (item.id === id) {
+        editedText = item.label;
+        console.log(editedText, "edited category");
+      }
+      return item;
+    });
   };
 
   deleteCategoryItem = (id) => {
@@ -76,16 +90,24 @@ export default class Practice extends React.Component {
       categories: prevState.categories.filter((item) =>
         item.id !== id ? item : null
       ),
+      todos: prevState.todos.filter((todo) =>
+        todo.category !== this.state.currentCategory ? todo : null
+      ),
+    }));
+    this.setState((prevState) => ({
+      currentCategory:
+        prevState.categories[prevState.categories.length - 1].label,
     }));
   };
 
   addNewTodo = () => {
-    const { todos } = this.state;
+    const { todos, currentCategory } = this.state;
     let newTodo = {
       id: Date.now(),
       text: this.newTodoItem.current.value,
       completed: false,
       // date: new Date(),
+      category: currentCategory,
     };
     this.setState({ todos: [...todos, newTodo] });
     this.newTodoItem.current.value = "";
@@ -113,25 +135,24 @@ export default class Practice extends React.Component {
     return true;
   };
 
-  saveEditedText = (id) => {
+  saveEditedText = (id, editedTodoText) => {
     this.setState((prevState) => ({
       todos: prevState.todos.map((todo) => {
         if (todo.id === id) {
-          todo.text = this.newTodoItem.current.value;
-          this.newTodoItem.current.value = "";
+          todo.text = editedTodoText;
+          editedTodoText = "";
         }
         return todo;
       }),
-      currentItemId: id,
+      // currentItemId: id,
     }));
   };
 
-  textEdit = (id) => {
+  textEdit = (id, editedTodoText) => {
     this.setState({ currentItemId: id });
     this.state.todos.filter((item) =>
-      item.id === id ? (this.newTodoItem.current.value = item.text) : null
+      item.id === id ? (editedTodoText = item.text) : null
     );
-    this.newTodoItem.current.focus();
   };
 
   deleteItem = (id) => {
@@ -148,10 +169,13 @@ export default class Practice extends React.Component {
 
   currentPageHandler = (currentPage) => this.setState({ currentPage });
 
+  currentCategoryHandler = (currentCategory) =>
+    this.setState({ currentCategory });
+
   categoriesHandler = (showCategorySaveButton) =>
     this.setState({ showCategorySaveButton });
 
-  componentDidUpdate() {}
+  // componentDidUpdate() {}
 
   render() {
     return (
@@ -172,55 +196,49 @@ export default class Practice extends React.Component {
               required
             />
             <>
-              {this.state.showButton ? (
-                <button
-                  className={`${"button"} ${"saveEditedText"} ${
-                    this.state.showButton ? "showButton" : "hideButton"
-                  }`}
-                  onClick={() => {
-                    this.saveEditedText(this.state.currentItemId);
-                    this.toggleButton();
-                  }}
-                >
-                  <i className="far fa-save"> SAVE </i>
-                </button>
-              ) : (
-                <button
-                  className={`${"button"} ${"add-button"} ${
-                    this.showButton && this.state.currentItemId === this.item.id
-                      ? "hideButton"
-                      : "showButton"
-                  }`}
-                  type="button"
-                  onClick={this.addTodo}
-                >
-                  <i className="fas fa-plus-square"></i> ADD
-                </button>
-              )}
+              <button
+                className={`${"button"} ${"add-button"} ${
+                  this.showButton && this.state.currentItemId === this.item.id
+                    ? "hideButton"
+                    : "showButton"
+                }`}
+                type="button"
+                onClick={this.addTodo}
+              >
+                <i className="fas fa-plus-square"></i> ADD
+              </button>
             </>
           </>
           <>
             {/* <Status statusSwitchHandler={this.statusSwitchHandler} /> */}
+
             <Search onSearch={this.handleSearch} />
           </>
         </div>
-        <Categories
-          currentCategoryId={this.state.currentCategoryId}
-          showCategorySaveButton={this.state.showCategorySaveButton}
-          categories={this.state.categories}
-          categoriesHandler={this.categoriesHandler}
-          addNewCategory={this.addNewCategory}
-          editCategoryItem={this.editCategoryItem}
-          saveEditedCategoryItem={this.saveEditedCategoryItem}
-          deleteCategoryItem={this.deleteCategoryItem}
-        />
         <div className="main_Practice">
+          <Categories
+            todos={this.state.todos}
+            currentCategory={this.state.currentCategory}
+            newTodoItem={this.newTodoItem}
+            currentCategoryHandler={this.currentCategoryHandler}
+            currentCategoryId={this.state.currentCategoryId}
+            showCategorySaveButton={this.state.showCategorySaveButton}
+            categories={this.state.categories}
+            categoriesHandler={this.categoriesHandler}
+            addNewCategory={this.addNewCategory}
+            editCategoryItem={this.editCategoryItem}
+            saveEditedCategoryItem={this.saveEditedCategoryItem}
+            deleteCategoryItem={this.deleteCategoryItem}
+          />
+
           <TodoItemsList
             handleChange={this.handleChange}
             deleteItem={this.deleteItem}
             textEdit={this.textEdit}
+            saveEditedText={this.saveEditedText}
             showButton={this.state.showButton}
-            // currentItemId={this.state.currentItemId}
+            currentCategory={this.state.currentCategory}
+            currentItemId={this.state.currentItemId}
             toggleButton={this.toggleButton}
             todos={this.state.todos}
             search={this.state.search}

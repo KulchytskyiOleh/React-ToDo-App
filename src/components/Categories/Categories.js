@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import CategoryItem from "./CategoryItem";
 import "./Categories.css";
 function Categories({
+  todos,
   categories,
   addNewCategory,
   editCategoryItem,
@@ -9,45 +10,51 @@ function Categories({
   saveEditedCategoryItem,
   showCategorySaveButton,
   categoriesHandler,
+  currentCategory,
+  currentCategoryHandler,
   currentCategoryId,
 }) {
-  let addInputValueHandler = (e) => {};
   const categoryInput = useRef("");
-  const [addInput, setAddInput] = useState("");
+
   return (
-    <div className="categories">
-      <div className="categoryItemWrapper">
-        <p>Category</p>
-        {categories.map((item) => (
-          <CategoryItem
-            item={item}
-            key={item.id}
-            id={item.id}
-            label={item.label}
-            currentCategoryId={currentCategoryId}
-            editCategoryItem={editCategoryItem}
-            deleteCategoryItem={deleteCategoryItem}
-            saveEditedCategoryItem={saveEditedCategoryItem}
-            showCategorySaveButton={showCategorySaveButton}
-            categoriesHandler={categoriesHandler}
-            addInputValue={addInput}
+    <div className="Categories">
+      <div className="categoryWrapper">
+        <p className="categoryTitle">Category</p>
+        <ul className="categoryListWrapper">
+          {categories.map((item) => (
+            <CategoryItem
+              item={item}
+              key={item.id}
+              id={item.id}
+              label={item.label}
+              currentCategory={currentCategory}
+              currentCategoryId={currentCategoryId}
+              currentCategoryHandler={currentCategoryHandler}
+              editCategoryItem={editCategoryItem}
+              deleteCategoryItem={deleteCategoryItem}
+              saveEditedCategoryItem={saveEditedCategoryItem}
+              showCategorySaveButton={showCategorySaveButton}
+              categoriesHandler={categoriesHandler}
+              todos={todos}
+            />
+          ))}
+        </ul>
+        <div className="categoryItemAddWrapper">
+          <input
+            className="categoryItemAddInput"
+            ref={categoryInput}
+            type="text"
           />
-        ))}
-        <input
-          ref={categoryInput}
-          type="text"
-          onChange={addInputValueHandler}
-        />
-        <button
-          onClick={() => {
-            addNewCategory(categories, categoryInput.current.value);
-            setAddInput(categoryInput.current.value);
-            console.log(addInput)
-            categoryInput.current.value = "";
-          }}
-        >
-          <i className="fa fa-plus" aria-hidden="true"></i>
-        </button>
+          <button
+            className="categoryButton categoryItemAddButton"
+            onClick={() => {
+              addNewCategory(categories, categoryInput.current.value);
+              categoryInput.current.value = "";
+            }}
+          >
+            <i className="fa fa-plus" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
     </div>
   );

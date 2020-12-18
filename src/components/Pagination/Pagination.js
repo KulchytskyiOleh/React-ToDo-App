@@ -8,16 +8,6 @@ function Pagination({ todos, itemsPerPage, currentPage, currentPageHandler }) {
   for (let i = 1; i <= paginateItemsCounter; i++) {
     numberOfPage.push(i);
   }
-
-  // if (currentPage) {
-  //   todos.map((item, index) =>
-  //     Math.ceil(++index / itemsPerPage) === currentPage
-  //       ? console.log(item)
-  //       : null
-  //   );
-  // }
-  // console.log("--------------");
-
   return (
     <div className={numberOfPage.length <= 1 ? "Paginate" : "Paginate Active"}>
       <ul>

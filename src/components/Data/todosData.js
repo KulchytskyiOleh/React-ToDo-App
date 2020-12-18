@@ -28,10 +28,8 @@ export default todosData;
 
 export const Categories = [
   { id: 1, label: "My todos" },
-  // { id: 2, label: "your todos" },
-  // { id: 3, label: "some todos" },
 ];
-// console.log(Categories[Categories.length - 1].label)
+
 export const contacts = [
   {
     tel: {

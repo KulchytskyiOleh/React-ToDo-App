@@ -46,9 +46,10 @@ function Modal({ modal, setModal }) {
     <div className="Modal">
       <div className="modalWrapper">
         <form className="modalWrapperForm">
-          <label>
-            Username:
+          <div className="userNameWrapper">
+            <label className="nameTitle">Username:</label>
             <input
+              className="userNameInput"
               ref={userNameInput}
               required
               value={userName}
@@ -57,11 +58,12 @@ function Modal({ modal, setModal }) {
               id="Username"
               onChange={userNameInputHandler}
             />
-          </label>
-          <br />
-          <label>
-            Message:
+          </div>
+          {/* <br /> */}
+          <div className="messageWrapper">
+            <label className="messageTitle">Message:</label>
             <input
+              className="messageInput"
               required
               value={message}
               type="text"
@@ -69,11 +71,12 @@ function Modal({ modal, setModal }) {
               id="Message"
               onChange={messageInputHandler}
             />
-          </label>
-          <br />
-          <label>
-            Email:
+          </div>
+          {/* <br /> */}
+          <div className="emailWrapper">
+            <label className="emailTitle">Email:</label>
             <input
+              className="emailInput"
               required
               value={email}
               type="email"
@@ -81,16 +84,16 @@ function Modal({ modal, setModal }) {
               id="Email"
               onChange={emailInputHandler}
             />
-          </label>
+          </div>
         </form>
         <div className="modalWrapperButtons">
-          <button onClick={() => submitHandler()}>
+          <button className="submitButton" onClick={() => submitHandler()}>
             <i className="fa fa-check" aria-hidden="true"></i>
           </button>
-          <button onClick={() => resetHandler()}>
+          <button className="resetButton" onClick={() => resetHandler()}>
             <i className="fa fa-refresh" aria-hidden="true"></i>
           </button>
-          <button onClick={() => closeModalHandler()}>
+          <button className="closeButton" onClick={() => closeModalHandler()}>
             <i className="fa fa-times" aria-hidden="true"></i>
           </button>
         </div>

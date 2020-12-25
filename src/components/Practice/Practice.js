@@ -2,6 +2,7 @@ import React from "react";
 import TodoItemsList from "./TodoItemsList";
 import Pagination from "../Pagination/Pagination";
 import Search from "../Search/Search";
+import DateSelector from "../DateSelector/DateSelector";
 // import Status from "../Status/Status";
 import Sidebar from "../Sidebar/Sidebar";
 import Categories from "../Categories/Categories";
@@ -31,6 +32,7 @@ export default class Practice extends React.Component {
       currentPage: 1,
       // newCategoryLabel: "",
       currentCategory: "My todos",
+      currentDay: new Date(),
       // currentCategory: "",
     };
   }
@@ -106,11 +108,12 @@ export default class Practice extends React.Component {
       id: Date.now(),
       text: this.newTodoItem.current.value,
       completed: false,
-      // date: new Date(),
+      date: new Date(),
       category: currentCategory,
     };
     this.setState({ todos: [...todos, newTodo] });
     this.newTodoItem.current.value = "";
+    console.log(todos);
   };
 
   addTodo = () => {
@@ -175,7 +178,9 @@ export default class Practice extends React.Component {
   categoriesHandler = (showCategorySaveButton) =>
     this.setState({ showCategorySaveButton });
 
-  // componentDidUpdate() {}
+  currentDayHandler = (currentDay) => this.setState({ currentDay });
+
+  componentDidUpdate() {}
 
   render() {
     return (
@@ -186,34 +191,12 @@ export default class Practice extends React.Component {
           showSideBar={this.state.showSideBar}
           showModal={this.state.showModal}
         />
-        <div className="practice_Top">
-          <>
-            <input
-              className="input inputTodoText"
-              type="text"
-              ref={this.newTodoItem}
-              placeholder="Add some new todo here..."
-              required
-            />
-            <>
-              <button
-                className={`${"button"} ${"add-button"} ${
-                  this.showButton && this.state.currentItemId === this.item.id
-                    ? "hideButton"
-                    : "showButton"
-                }`}
-                type="button"
-                onClick={this.addTodo}
-              >
-                <i className="fas fa-plus-square"></i> ADD
-              </button>
-            </>
-          </>
-          <>
-            {/* <Status statusSwitchHandler={this.statusSwitchHandler} /> */}
-
+        <div className="practiceTop">
+          {/* <Status statusSwitchHandler={this.statusSwitchHandler} /> */}
+          <div className="searchWrapper">
             <Search onSearch={this.handleSearch} />
-          </>
+          </div>
+          <DateSelector currentDayHandler={this.currentDayHandler} />
         </div>
         <div className="main_Practice">
           <Categories
@@ -230,6 +213,28 @@ export default class Practice extends React.Component {
             saveEditedCategoryItem={this.saveEditedCategoryItem}
             deleteCategoryItem={this.deleteCategoryItem}
           />
+          <div className="addTodoWrapper">
+            <input
+              autoFocus={true}
+              className="input inputTodoText"
+              type="text"
+              ref={this.newTodoItem}
+              placeholder="Add some new todo here..."
+              required
+            />
+
+            <button
+              className={`${"button"} ${"addButton"} ${
+                this.showButton && this.state.currentItemId === this.item.id
+                  ? "hideButton"
+                  : "showButton"
+              }`}
+              type="button"
+              onClick={this.addTodo}
+            >
+              <i className="fas fa-plus-square" /> ADD
+            </button>
+          </div>
 
           <TodoItemsList
             handleChange={this.handleChange}

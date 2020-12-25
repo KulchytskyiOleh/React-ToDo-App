@@ -16,6 +16,9 @@ export default function TodoItemsList({
   currentItemId,
   currentCategory,
 }) {
+  // todos.map((item) =>
+  //   currentCategory === item.category ? console.log(item) : null
+  // );
   return (
     <div className="TodoItemsList">
       {todos
@@ -33,8 +36,7 @@ export default function TodoItemsList({
           item.text.toLowerCase().includes(search.trim().toLowerCase())
         )
         .filter((item, index) =>
-          currentPage &&
-          Math.ceil(++index / itemsPerPage) === currentPage 
+          currentPage && Math.ceil(++index / itemsPerPage) === currentPage
             ? item
             : null
         )

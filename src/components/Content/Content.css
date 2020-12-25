@@ -14,42 +14,33 @@ button {
   padding-bottom: 1.5%;
   position: relative;
 }
-/* .Practice {
-  position: absolute;
-  background-color: #a70e0e;
-  padding: 5px;
-  height: auto;
-  z-index: 1;
-} */
-/* .todo-items {
-  margin-bottom: 30px;
-} */
 .main_Practice {
   max-width: 1920px;
   margin: auto;
   display: grid;
-  gap: 1%;
-  grid-template-columns: 25% 70% 5%;
-  grid-auto-columns: auto;
-  grid-auto-rows: auto;
-  grid-template-areas: "categoryList todoList .";
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 0.5fr 2fr;
+  grid-template-areas:
+    "categoryList addTodoWrapper ."
+    ". todoList .";
 }
 .TodoItemsList {
+  display: grid;
   grid-area: todoList;
-  max-width: 75%;
-  grid-auto-rows: auto;
+  height: max-content;
+  background-color: #add8e6;
+  align-self: stretch;
+  align-content: start;
 }
 .todo-item {
   background-color: #f8fc11;
-  margin: 20px 15px;
+  margin: 15px;
   padding: 1.5%;
   border-radius: 15px;
   display: grid;
   grid-template-columns: 0.5fr 6.5fr repeat(2, 0.5fr);
   align-items: center;
   gap: 1%;
-  /* grid-auto-columns: auto;
-  grid-auto-rows: auto; */
 }
 .todo-item:nth-child(odd) {
   background-color: #fca311;
@@ -65,7 +56,6 @@ button {
   justify-self: start;
   word-break: break-word;
   padding-left: 15px;
-  /* word-break: break-all; */
 }
 .textEdit {
   padding: 6px;
@@ -73,17 +63,12 @@ button {
   background-color: #c0c0c0;
   border: 1px solid #000000;
   justify-self: center;
-  /* align-self: center; */
-  /* justify-self: stretch; */
-  /* align-self: stretch; */
 }
 .textEdit:hover {
   background-color: #5e5e5e;
   color: #ffffff;
-  /* border: 1px solid #000000; */
 }
 .saveEditedText {
-  /* justify-self: stretch; */
   background-color: #30ac30;
   justify-self: center;
   padding: 6px;
@@ -110,26 +95,43 @@ button {
   color: #000000;
 }
 
-.practice_Top {
+.practiceTop {
   background-color: #05668d;
   height: auto;
-  display: flex;
+  display: grid;
   padding: 15px;
-  justify-content: center;
+  gap: 15px;
+  grid-template-columns: 1fr 1fr 1fr;
 }
-.input {
-  padding: 10px 30px;
-  margin-right: 15px;
-  border-radius: 5px;
+.addTodoWrapper {
+  grid-area: addTodoWrapper;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 2fr 0.5fr;
+  grid-template-rows: 0.5fr 1fr 0.5fr;
+  gap: 5px 10px;
+  grid-template-areas:
+    ". ."
+    "inputTodoText addButton "
+    ". .";
 }
 .inputTodoText {
-  background-color: #eae2b7;
-}
-.button {
-  background-color: #fca311;
-  padding: 10px 20px;
-  margin-right: 15px;
+  grid-area: inputTodoText;
+  min-width: 50px;
+  padding: 10px 30px;
   border-radius: 5px;
+  background-color: #fa9a9a;
+  justify-self: stretch;
+  align-self: center;
+}
+.addButton {
+  min-width: 50px;
+  grid-area: addButton;
+  background-color: #fca311;
+  padding: 13px;
+  border-radius: 5px;
+  justify-self: stretch;
+  align-self: center;
 }
 
 .countTodosButton {
@@ -145,4 +147,44 @@ p.Completed {
   color: #008000;
   font-style: italic;
   text-decoration: line-through;
+}
+@media screen and (max-width: 600px) {
+  .main_Practice {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: 2fr;
+    grid-template-rows: 0.5fr 0.5fr 2fr;
+    grid-template-areas:
+      "categoryList"
+      "addTodoWrapper"
+      "todoList";
+    /* "footer"; */
+    justify-items: center;
+  }
+  .addTodoWrapper {
+    width: 95%;
+    display: grid;
+    grid-template-columns: 2fr 0.5fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "inputTodoText addButton ";
+  }
+  .inputTodoText {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fa9a9a;
+    justify-self: stretch;
+    align-self: center;
+  }
+  .addButton {
+    grid-area: addButton;
+    background-color: #fca311;
+    padding: 12px;
+    border-radius: 5px;
+    justify-self: stretch;
+    align-self: center;
+  }
+  .TodoItemsList {
+    width: 95%;
+    grid-auto-rows: max-content;
+  }
 }

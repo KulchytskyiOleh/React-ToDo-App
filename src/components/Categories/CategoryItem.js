@@ -41,7 +41,7 @@ function CategoryItem({
         <a
           className="categoryItemText"
           href="#/"
-          id={`CategoryItem_${item.id}`}
+          // id={`CategoryItem_${item.id}`}
           onClick={() => {
             currentCategoryHandler(editLabel);
           }}

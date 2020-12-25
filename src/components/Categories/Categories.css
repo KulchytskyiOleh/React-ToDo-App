@@ -3,8 +3,8 @@
   min-width: 20px;
   min-height: 20px;
   border-radius: 5px;
-  justify-self: center;
-  align-self: center;
+  /* justify-self: center;
+  align-self: center; */
 }
 .showSaveButton {
   display: block;
@@ -13,12 +13,11 @@
   display: none;
 }
 .Categories {
-  max-width: 200px;
   grid-area: categoryList;
+  min-width: 200px;
   justify-self: start;
   align-self: start;
   margin: 10px;
-  padding: 5px 10px;
   background-color: #008080;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -28,11 +27,12 @@
 
 .categoryWrapper {
   grid-area: 1 / 1 / 4 / 5;
+  margin: 5px;
 }
 
 .categoryTitle {
   display: grid;
-  grid-template-columns: auto;
+  /* grid-template-columns: auto; */
 }
 
 .categoryListWrapper {
@@ -55,6 +55,7 @@
   display: grid;
   grid-template-columns: 5fr repeat(2, 0.5fr);
   grid-template-areas: "categoryItemText categoryItemEdit categoryItemDelete";
+  padding: 5px;
   gap: 2%;
 }
 .categoryItem > a {
@@ -86,10 +87,38 @@
 .categoryItemAddInput {
   grid-area: categoryItemAddInput;
   min-width: 50px;
-  /* box-sizing: border-box; */
 }
 
 .categoryItemAddButton {
   grid-area: categoryItemAddButton;
   justify-self: stretch;
+}
+@media screen and (max-width: 600px) {
+  .Categories {
+    grid-area: categoryList;
+    width: 95%;
+    justify-self: center;
+  }
+  .categoryItem {
+    display: grid;
+    /* width: max-content; */
+    grid-template-columns: 2fr repeat(2, 0.5fr);
+    /* grid-template: repeat(2, 1fr) / repeat(2, 1fr); */
+    grid-template-areas: "categoryItemText categoryItemEdit categoryItemDelete";
+    /* gap: 10% 5%; */
+    padding: 5px;
+  }
+  .categoryItemText {
+    /* justify-self: center;
+    grid-column: 1 / span 2; */
+  }
+  .categoryItemEdit {
+    /* grid-area: categoryItemEdit;
+    justify-self: end; */
+  }
+
+  .categoryItemDelete {
+    /* justify-self: start;
+    grid-area: categoryItemDelete; */
+  }
 }

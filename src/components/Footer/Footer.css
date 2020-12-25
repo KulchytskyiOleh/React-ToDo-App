@@ -1,4 +1,5 @@
 footer {
+  grid-area: footer;
   background-color: #05668d;
   grid-area: footer;
   padding: 1vh;
@@ -14,8 +15,7 @@ a {
   color: #a8dadc;
   height: auto;
   text-decoration: none;
+}
+.Linkedin {
   margin-left: 5px;
 }
-/* .linkedin {
-  margin-left: 5px;
-} */

@@ -2,7 +2,11 @@
   display: none;
 }
 .Active {
-  display: block;
+  display: grid;
+  justify-content: center;
+  /* align-content: end; */
+  margin-top: 10px;
+  /* display: block; */
 }
 
 .Paginate > ul {

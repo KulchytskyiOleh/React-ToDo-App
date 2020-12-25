@@ -2,10 +2,10 @@
   position: absolute;
   background: #c0c0c0;
   border: 2px solid #000000;
-  padding: 20px;
+  padding: 40px;
   display: grid;
-  height: 200px;
-  width: 300px;
+  max-height: 200px;
+  max-width: 300px;
   left: 50%;
   top: 55%;
   transform: translate(-50%, -50%);
@@ -14,16 +14,36 @@
 .modalWrapper {
   position: relative;
   display: grid;
-  justify-content: center;
 }
 .modalWrapperForm {
-  align-self: center;
+  display: grid;
+  justify-items: end;
+  margin-bottom: 10px;
 }
+.userNameWrapper {
+  justify-content: end;
+}
+.nameTitle {
+}
+.userNameInput {
+}
+
+.messageWrapper {
+}
+.messageTitle {
+}
+.messageInput {
+}
+
+.emailWrapper {
+}
+.emailTitle {
+}
+.emailInput {
+}
+
 .modalWrapperButtons {
   display: grid;
-  margin: 5px;
-}
-.modalWrapperButtons > i {
-  padding: 5px;
-  margin: 5px;
+  gap: 15%;
+  margin-bottom: 10px;
 }

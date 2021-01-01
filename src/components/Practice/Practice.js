@@ -30,9 +30,10 @@ export default class Practice extends React.Component {
       categories: Categories,
       itemsPerPage: 4,
       currentPage: 1,
-      // newCategoryLabel: "",
       currentCategory: "My todos",
-      currentDay: new Date(),
+      currentDateRange: "",
+      today: new Date(),
+      // newCategoryLabel: "",
       // currentCategory: "",
     };
   }
@@ -45,8 +46,6 @@ export default class Practice extends React.Component {
       }),
     }));
   };
-
-  dateCreate = () => {};
 
   addNewCategory = (categories, labelText) => {
     let newCategory = {
@@ -81,7 +80,6 @@ export default class Practice extends React.Component {
     this.state.categories.filter((item) => {
       if (item.id === id) {
         editedText = item.label;
-        console.log(editedText, "edited category");
       }
       return item;
     });
@@ -113,7 +111,6 @@ export default class Practice extends React.Component {
     };
     this.setState({ todos: [...todos, newTodo] });
     this.newTodoItem.current.value = "";
-    console.log(todos);
   };
 
   addTodo = () => {
@@ -124,7 +121,10 @@ export default class Practice extends React.Component {
       messageErrors = "Please enter your todo";
     }
     this.state.todos.map((item) => {
-      if (item.text === this.newTodoItem.current.value) {
+      if (
+        item.text === this.newTodoItem.current.value &&
+        this.state.currentCategory === item.category
+      ) {
         success = false;
         messageErrors = "This element already exists";
       }
@@ -178,7 +178,8 @@ export default class Practice extends React.Component {
   categoriesHandler = (showCategorySaveButton) =>
     this.setState({ showCategorySaveButton });
 
-  currentDayHandler = (currentDay) => this.setState({ currentDay });
+  currentDateRangeHandler = (currentDateRange) =>
+    this.setState({ currentDateRange });
 
   componentDidUpdate() {}
 
@@ -196,7 +197,10 @@ export default class Practice extends React.Component {
           <div className="searchWrapper">
             <Search onSearch={this.handleSearch} />
           </div>
-          <DateSelector currentDayHandler={this.currentDayHandler} />
+          <DateSelector
+            currentDateRangeHandler={this.currentDateRangeHandler}
+            todos={this.state.todos}
+          />
         </div>
         <div className="main_Practice">
           <Categories
@@ -250,12 +254,18 @@ export default class Practice extends React.Component {
             status={this.state.status}
             currentPage={this.state.currentPage}
             itemsPerPage={this.state.itemsPerPage}
+            currentDateRange={this.state.currentDateRange}
+            today={this.state.today}
+            getDaysArray={this.state.getDaysArray}
+            dayAdd={this.state.dayAdd}
+            daySubst={this.state.daySubst}
           />
         </div>
         <Pagination
           todos={this.state.todos}
           itemsPerPage={this.state.itemsPerPage}
           currentPage={this.state.currentPage}
+          currentCategory={this.state.currentCategory}
           currentPageHandler={this.currentPageHandler}
         />
       </div>

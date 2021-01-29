@@ -17,7 +17,6 @@ button.menu-bars {
 .sidebar {
   display: none;
   position: fixed;
-  /* top: 10; */
   left: -100%;
   transition: 850ms;
 }

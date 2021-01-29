@@ -1,47 +1,33 @@
-import React /* useState  */ from "react";
+import React, {/*  useState */ } from "react";
 import "./Pagination.css";
 function Pagination({
-  todos,
+  sameCategoryList,
   itemsPerPage,
   currentPage,
   currentPageHandler,
-  currentCategory,
+  // currentCategory,
 }) {
-  let sameCategoryList = [];
-  todos.filter((item) => {
-    if (item.category === currentCategory) {
-      return sameCategoryList.push(item);
-    }
-    return item;
-  });
-if(sameCategoryList){
-  
-}
-
-  let numberOfPage = [];
   let numberOfItems = sameCategoryList.length;
-  let paginateItemsCounter = Math.ceil(numberOfItems / itemsPerPage);
+  let numberOfPage = Math.ceil(numberOfItems / itemsPerPage);
+  const items = [];
 
-  for (let i = 1; i <= paginateItemsCounter; i++) {
-    numberOfPage.push(i);
+
+  for (let i = 1; i <= numberOfPage; i++) {
+    items.push(
+      <li key={i}>
+        <button
+          className={currentPage === i ? "ActivePage" : null}
+          onClick={() => currentPageHandler(i)}
+        >
+          {i}
+        </button>
+      </li>
+    );
   }
 
   return (
-    <div className={numberOfPage.length <= 1 ? "Paginate" : "Paginate Active"}>
-      <ul>
-        {/* <li>prev</li> */}
-        {numberOfPage.map((number) => (
-          <li key={number}>
-            <button
-              className={currentPage === number ? "ActivePage" : null}
-              onClick={() => currentPageHandler(number)}
-            >
-              {number}
-            </button>
-          </li>
-        ))}
-        {/* <li>next</li> */}
-      </ul>
+    <div className={numberOfPage <= 1 ? "Paginate" : "Paginate Active"}>
+      <ul>{items}</ul>
     </div>
   );
 }

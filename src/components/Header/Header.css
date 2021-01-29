@@ -1,15 +1,27 @@
 .header {
   background-color: #282c34;
   min-height: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: grid;
   font-size: calc(10px + 2vmin);
   grid-area: header;
+  grid-template-areas: ". headerSlogan themeModal";
+
+  align-content: center;
 }
-.header > p {
-  color: white;
-  
+.headerSlogan {
+  color: #ffffff;
+  grid-area: headerSlogan;
+  justify-self: center;
 }
 
+.themeModal {
+  display: grid;
+  grid-area: themeModal;
+  justify-self: center;
+  /* padding: 50px; */
+  /* background-color: #6563c7; */
+}
+.themeModalButton {
+  /* margin: 5px; */
+  padding: 10px;
+}

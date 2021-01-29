@@ -7,12 +7,12 @@ export default function Sidebar({
   status,
   statusSwitchHandler,
 }) {
-  const [sidebar, setSidebar] = useState(showSideBar);
-  const [modal, setModal] = useState(showModal);
   const uncompletedTodos = useRef(null);
   const completedTodos = useRef(null);
   const allTodos = useRef(null);
   const [displayAllTodos, setDisplayAllTodos] = useState(true);
+  const [sidebar, setSidebar] = useState(showSideBar);
+  const [modal, setModal] = useState(showModal);
   let sidebarToggleHandler = () => setSidebar(() => !sidebar);
   let modalToggleHandler = () => setModal(() => !modal);
   // let statusHandler = (e) => statusSwitchHandler(e.target.value);
@@ -41,7 +41,7 @@ export default function Sidebar({
           setModal("");
         }}
       >
-        <i className={sidebar ? "fa fa-times" : "fa fa-bars"}></i>
+        <i className={sidebar ? "fa fa-times" : "fa fa-bars"}/>
       </button>
       <aside className={`${sidebar ? "sidebar active" : "sidebar"}`}>
         <div className="sidebar-items">

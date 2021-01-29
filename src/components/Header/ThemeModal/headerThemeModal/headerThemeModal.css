@@ -1,0 +1,33 @@
+/* .sidebarThemeModalWrapper {
+    position: absolute;
+    background: #c0c0c0;
+    border: 2px solid #000000;
+    padding: 40px;
+    display: grid;
+    max-height: 300px;
+    max-width: 400px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 60;
+    gap: 10px;
+    grid-template-areas:
+      " sidebarThemeModalButton"
+      "."
+      " inputBackgroundColor";
+  }
+  button {
+    margin-bottom: 5px;
+  }
+  .passive {
+    display: none;
+    transition: 850ms;
+  }
+  .inputBackgroundColor {
+    grid-area: inputBackgroundColor;
+  }
+  .sidebarThemeModalButton {
+    grid-area: sidebarThemeModalButton;
+    justify-self: center;
+  }
+   */

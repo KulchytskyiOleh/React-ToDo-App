@@ -39,7 +39,10 @@ export default function TodoItem({
           value={editedText}
         />
       ) : (
-        <p className={`${item.completed ? "Completed" : "todoText"} `}>
+        <p
+          className={`${item.completed ? "Completed" : "todoText"} `}
+          onClick={() => handleChange(item.id)}
+        >
           {editedText}
         </p>
       )}

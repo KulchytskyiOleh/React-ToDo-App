@@ -1,0 +1,68 @@
+.mainThemeModalWindowWrapper {
+  position: absolute;
+  background: #15af22;
+  border: 2px solid #000000;
+  padding: 40px;
+  display: grid;
+  min-height: 200px;
+  min-width: 300px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 40;
+}
+
+.secondaryThemeModalWrapper {
+  position: absolute;
+  background: #c0c0c0;
+  border: 2px solid #000000;
+  padding: 40px;
+  display: grid;
+  max-height: 300px;
+  max-width: 400px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 60;
+  gap: 10px;
+  grid-template-areas:
+    "inputBackgroundColorWrapper"
+    "inputTextColorWrapper"
+    "."
+    "modalWindowSubmitButton modalWindowResetButton modalWindowBackButton";
+}
+.Hide {
+  display: none;
+  transition: 850ms;
+}
+button {
+  margin-bottom: 5px;
+}
+.inputBackgroundColorWrapper {
+  grid-area: inputBackgroundColorWrapper;
+  /* background-color: blue; */
+}
+.inputTextColorWrapper {
+  grid-area: inputTextColorWrapper;
+  /* background-color: yellow; */
+}
+input {
+  margin-right: 5px;
+}
+.modalWindowSubmitButton {
+  grid-area: modalWindowSubmitButton;
+  background-color: orange;
+  margin-right: 15px;
+  padding: 5px;
+}
+.modalWindowResetButton {
+  background-color: pink;
+  grid-area: modalWindowResetButton;
+  margin-right: 15px;
+  padding: 5px;
+}
+.modalWindowBackButton {
+  padding: 5px;
+  grid-area: modalWindowBackButton;
+  background-color: red;
+}

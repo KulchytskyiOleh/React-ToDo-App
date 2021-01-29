@@ -11,6 +11,7 @@ function CategoryItem({
   currentCategoryId,
   currentCategoryHandler,
   currentCategory,
+  deleteCategory,
   todos,
 }) {
   const editInput = useRef(null);
@@ -88,7 +89,8 @@ function CategoryItem({
         <i
           className="fas fa-trash-alt"
           onClick={() => {
-            deleteCategoryItem(item.id);
+            // deleteCategoryItem(item.id);
+            deleteCategory(item.id)
           }}
         />
       </button>

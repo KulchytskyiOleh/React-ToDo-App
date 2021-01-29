@@ -1,8 +1,9 @@
-import React from "react";
+import React /* useEffect, useState */ from "react";
+// import Pagination from "../Pagination/Pagination";
 import TodoItem from "./TodoItem";
 
 export default function TodoItemsList({
-  todos,
+  sameCategoryList,
   search,
   textEdit,
   showButton,
@@ -12,27 +13,15 @@ export default function TodoItemsList({
   deleteItem,
   itemsPerPage,
   currentPage,
+  currentPageHandler,
   currentItemId,
   currentCategory,
   currentDateRange,
+  category,
   today,
   status,
+  month,
 }) {
-  const month = {
-    0: 1,
-    1: 2,
-    2: 3,
-    3: 4,
-    4: 5,
-    5: 6,
-    6: 7,
-    7: 8,
-    8: 9,
-    9: 10,
-    10: 11,
-    11: 12,
-  };
-
   let dayAdd = (numberDays) => {
     return new Date(
       today.getFullYear(),
@@ -62,8 +51,7 @@ export default function TodoItemsList({
 
   return (
     <div className="TodoItemsList">
-      {todos
-        .filter((item) => (currentCategory === item.category ? item : null))
+      {sameCategoryList
         .filter((item) => {
           if (currentDateRange === "") {
             return true;
@@ -141,10 +129,9 @@ export default function TodoItemsList({
         .filter((item) =>
           item.text.toLowerCase().includes(search.trim().toLowerCase())
         )
+        .reverse()
         .filter((item, index) =>
-          currentPage && Math.ceil(++index / itemsPerPage) === currentPage
-            ? item
-            : null
+          Math.ceil(++index / itemsPerPage) === currentPage ? item : null
         )
         .map((item) => (
           <TodoItem
@@ -160,6 +147,15 @@ export default function TodoItemsList({
             toggleButton={toggleButton}
           />
         ))}
+      {/* <>
+        <Pagination
+          todos={todos}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          currentCategory={currentCategory}
+          currentPageHandler={currentPageHandler}
+        />
+      </> */}
     </div>
   );
 }

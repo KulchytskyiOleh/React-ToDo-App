@@ -1,9 +1,9 @@
-import React /* useEffect, useState */ from "react";
+import React, { useEffect, useState } from "react";
 // import Pagination from "../Pagination/Pagination";
 import TodoItem from "./TodoItem";
 
 export default function TodoItemsList({
-  sameCategoryList,
+  todos,
   search,
   textEdit,
   showButton,
@@ -18,10 +18,14 @@ export default function TodoItemsList({
   currentCategory,
   currentDateRange,
   category,
+  sameCategoryList,
   today,
   status,
   month,
 }) {
+  useEffect(() => {
+
+  }, [])
   let dayAdd = (numberDays) => {
     return new Date(
       today.getFullYear(),
@@ -51,7 +55,23 @@ export default function TodoItemsList({
 
   return (
     <div className="TodoItemsList">
-      {sameCategoryList
+      {todos
+        .filter(item => {
+          if (currentCategory === "Select category") return true
+          else if (currentCategory === "My todos" && item.category === currentCategory) { return true }
+          else if (currentCategory === "Hobby" && item.category === currentCategory) { return true }
+          else if (currentCategory === "Other" && item.category === currentCategory) { return true }
+          return false;
+        })
+        .filter((item) => {
+          if (status === "all") return true;
+          else if (status === "completed" && item.completed === true) {
+            return true;
+          } else if (status === "uncompleted" && item.completed === false) {
+            return true;
+          }
+          return false;
+        })
         .filter((item) => {
           if (currentDateRange === "") {
             return true;
@@ -116,15 +136,7 @@ export default function TodoItemsList({
           return false;
         })
 
-        .filter((item) => {
-          if (status === "all") return true;
-          else if (status === "completed" && item.completed === true) {
-            return true;
-          } else if (status === "uncompleted" && item.completed === false) {
-            return true;
-          }
-          return false;
-        })
+
 
         .filter((item) =>
           item.text.toLowerCase().includes(search.trim().toLowerCase())
@@ -147,15 +159,6 @@ export default function TodoItemsList({
             toggleButton={toggleButton}
           />
         ))}
-      {/* <>
-        <Pagination
-          todos={todos}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          currentCategory={currentCategory}
-          currentPageHandler={currentPageHandler}
-        />
-      </> */}
     </div>
   );
 }

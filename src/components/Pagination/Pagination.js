@@ -1,12 +1,14 @@
 import React, {/*  useState */ } from "react";
 import "./Pagination.css";
 function Pagination({
+  todos,
   sameCategoryList,
   itemsPerPage,
   currentPage,
   currentPageHandler,
   // currentCategory,
 }) {
+  // let numberOfItems = todos.length;
   let numberOfItems = sameCategoryList.length;
   let numberOfPage = Math.ceil(numberOfItems / itemsPerPage);
   const items = [];

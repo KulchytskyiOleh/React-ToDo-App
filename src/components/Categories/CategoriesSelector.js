@@ -12,22 +12,18 @@ function CategoriesSelector({
   return (
     <div className="categoriesSelector">
       <form>
-        {/* <label className="categoryListLabel" for="Category list">
-          Choose category: 
-        </label> */}
-        {categories.length >= 1 ? (
-          <select
-            onChange={categoryHandler}
-            value={currentCategory}
-            name="Category list"
-          >
-            {categories.map((item) => (
-              <option value={item.label} key={item.id}>
-                {item.label}
-              </option>
-            ))}
-          </select>
-        ) : null}
+        <select
+          onChange={categoryHandler}
+          daefaultValue={currentCategory}
+          name="Category list"
+        >
+          <option value="Select category">Select category</option>
+          {categories.map((item) => (
+            <option value={item.label} key={item.id}>
+              {item.label}
+            </option>
+          ))}
+        </select>
       </form>
     </div>
   );

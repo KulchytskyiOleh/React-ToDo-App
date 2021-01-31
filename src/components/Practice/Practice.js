@@ -26,7 +26,7 @@ export default class Practice extends React.Component {
       categories: Categories,
       itemsPerPage: 4,
       currentPage: 1,
-      currentCategory: "My todos",
+      currentCategory: "Select category",
       filteredCategory: [],
       currentDateRange: "",
       today: new Date(),
@@ -42,7 +42,7 @@ export default class Practice extends React.Component {
   // sameCategoryList = [];
   handleChange = (id) => {
     this.setState((prevState) => ({
-      filteredTodos: prevState.filteredTodos.map((todo) => {
+      todos: prevState.todos.map((todo) => {
         todo.completed = todo.id === id ? !todo.completed : todo.completed;
         return todo;
       }),
@@ -62,16 +62,17 @@ export default class Practice extends React.Component {
       }));
     }
   };
-  addCategory = (categories, labelText) => {
-    // // var arrays = [],
-    // // size = 3;
-    // // while (a.length > 0) arrays.push(a.splice(0, size));
-    // if (this.state.categories.length > 0)
-    //   this.state.filteredCategory.push(
-    //     this.state.todos.splice(0, this.state.categories.length)
-    //   );
-    // console.log(this.state.filteredCategory);
-  };
+  // addCategory = (categories, labelText) => {
+  //   if (this.state.currentCategory === "My todos") {
+  //     this.setState({ filteredTodos: this.state.todos.filter(item => item.category === "My todos") })
+  //   }
+  //   else if (this.state.currentCategory === "Hobby") {
+  //     this.setState({ filteredTodos: this.state.todos.filter(item => item.category === "Hobby") })
+  //   }
+  //   if (this.state.currentCategory === "Other") {
+  //     this.setState({ filteredTodos: this.state.todos.filter(item => item.category === "Other") })
+  //   }
+  // };
 
   saveEditedCategoryItem = (id, editedText) => {
     this.setState((prevState) => ({
@@ -81,7 +82,7 @@ export default class Practice extends React.Component {
         }
         return item;
       }),
-      filteredTodos: prevState.filteredTodos.map((todo) => {
+      todos: prevState.todos.map((todo) => {
         if (prevState.currentCategory === todo.category) {
           todo.category = editedText;
         }
@@ -107,7 +108,7 @@ export default class Practice extends React.Component {
       categories: prevState.categories.filter((item) =>
         item.id !== id ? item : null
       ),
-      filteredTodos: prevState.filteredTodos.filter((todo) =>
+      todos: prevState.todos.filter((todo) =>
         todo.category !== this.state.currentCategory ? todo : null
       ),
     }));
@@ -135,19 +136,24 @@ export default class Practice extends React.Component {
       date: new Date(),
       category: currentCategory,
     };
-    let filteredTodo =
-      newTodo["category"] === this.state.currentCategory ? newTodo : null;
+
     this.setState({ todos: [...todos, newTodo] });
-    if (this.state.categories.length >= 1) {
-      this.setState({
-        filteredTodos: [
-          ...this.state.filteredTodos.filter((item) =>
-            item.category === currentCategory ? (item = filteredTodo) : item
-          ),
-          filteredTodo,
-        ],
-      });
-    }
+
+    this.setState({
+      filteredTodos: [...this.state.filteredTodos, newTodo]
+    })
+    // if (this.state.currentCategory === "My todos") {
+    //   this.setState({ filteredTodos: this.state.todos.filter(item => item.category === "My todos") })
+    //   console.log(this.state.filteredTodos, this.state.currentCategory)
+    // }
+    // else if (this.state.currentCategory === "Hobby") {
+    //   this.setState({ filteredTodos: this.state.todos.filter(item => item.category === "Hobby") })
+    //   console.log(this.state.filteredTodos, this.state.currentCategory)
+    // }
+    // else if (this.state.currentCategory === "Other") {
+    //   this.setState({ filteredTodos: this.state.todos.filter(item => item.category === "Other") })
+    //   console.log(this.state.filteredTodos, this.state.currentCategory)
+    // }
     this.newTodoItem.current.value = "";
   };
 
@@ -174,7 +180,8 @@ export default class Practice extends React.Component {
     });
 
     if (success) {
-      return this.addNewTodo();
+
+      return (this.filteredTodosHandler(), this.addNewTodo())
     } else {
       alert(messageErrors);
     }
@@ -183,7 +190,7 @@ export default class Practice extends React.Component {
 
   saveEditedText = (id, editedTodoText) => {
     this.setState((prevState) => ({
-      filteredTodos: prevState.filteredTodos.map((todo) => {
+      todos: prevState.todos.map((todo) => {
         if (todo.id === id) {
           todo.text = editedTodoText;
           editedTodoText = "";
@@ -203,14 +210,12 @@ export default class Practice extends React.Component {
 
   deleteItem = (id) => {
     this.setState((prevState) => ({
-      filteredTodos: prevState.filteredTodos.filter((todo) =>
+      todos: prevState.todos.filter((todo) =>
         todo.id !== id ? todo : null
       ),
     }));
     let numberItems = this.state.filteredTodos.length - 1;
     let activePage = Math.ceil(numberItems / this.state.itemsPerPage);
-    // console.log(numberItems, "numberItems");
-    // console.log(activePage, "activePage");
     if (this.state.currentCategory) {
       this.setState({ currentPage: activePage <= 1 ? 1 : activePage });
     }
@@ -224,37 +229,47 @@ export default class Practice extends React.Component {
 
   currentPageHandler = (currentPage) => this.setState({ currentPage });
 
-  currentCategoryHandler = (currentCategory) =>
-    this.setState({ currentCategory });
+  // currentCategoryHandler = (currentCategory) => { this.setState({ currentCategory }) }
 
-  categorySwitchHandler = (currentCategory) =>
-    this.setState({ currentCategory });
+  categorySwitchHandler = (currentCategory) => { this.setState({ currentCategory }); this.filteredTodosHandler(currentCategory) };
 
-  categoriesHandler = (showCategorySaveButton) =>
-    this.setState({ showCategorySaveButton });
 
-  currentDateRangeHandler = (currentDateRange) =>
-    this.setState({ currentDateRange });
+  categoriesHandler = (showCategorySaveButton) => this.setState({ showCategorySaveButton })
 
-  componentDidMount() {
-    if (this.state.categories.length <= 1) {
-      this.setState(() => ({
-        filteredTodos: this.state.todos.filter(
-          (item) => item.category === this.state.currentCategory
-        ),
-      }));
+  currentDateRangeHandler = (currentDateRange) => this.setState({ currentDateRange });
+
+  filteredTodosHandler = () => {
+    if (this.state.currentCategory === "Select category") {
+      this.setState({ filteredTodos: [...this.state.todos] })
+
     }
+    if (this.state.currentCategory === "My todos") {
+      this.setState((prevState) => ({ filteredTodos: prevState.todos.filter(item => item.category === "My todos") }))}
+    else if (this.state.currentCategory === "Hobby") {
+      this.setState((prevState) => ({ filteredTodos: prevState.todos.filter(item => item.category === "Hobby") }))
+    }
+    else if (this.state.currentCategory === "Other") {
+      this.setState((prevState) => ({filteredTodos: [prevState.todos.filter(item => item.category === "Other")] }))
+    }
+
   }
+  componentDidMount() {
+
+  }
+
   componentDidUpdate() {
-    // console.log(this.state.currentCategory);
+
   }
 
   render() {
-    // const sameCategoryList = this.state.todos.filter(
-    //   (item) => item.category === this.state.currentCategory
-    //   // &&
-    //   // item.text.toLowerCase().includes(this.state.search.trim().toLowerCase())
-    // );
+    const sameCategoryList = this.state.todos.filter(item => {
+      if (this.state.currentCategory === "Select category") return true
+      else if (this.state.currentCategory === "My todos" && item.category === "My todos") { return true }
+      else if (this.state.currentCategory === "Hobby" && item.category === "Hobby") { return true }
+      else if (this.state.currentCategory === "Other" && item.category === "Other") { return true }
+      return false;
+    })
+
     return (
       <div className="practice">
         <Sidebar
@@ -280,9 +295,9 @@ export default class Practice extends React.Component {
           />
         </div>
         <div className="main_Practice">
-          <Categories
-            // todos={this.state.todos}
-            todos={this.state.filteredTodos}
+          {/* <Categories
+            todos={this.state.todos}
+            // todos={this.state.filteredTodos}
             currentCategory={this.state.currentCategory}
             newTodoItem={this.newTodoItem}
             currentCategoryHandler={this.currentCategoryHandler}
@@ -296,7 +311,7 @@ export default class Practice extends React.Component {
             saveEditedCategoryItem={this.saveEditedCategoryItem}
             deleteCategoryItem={this.deleteCategoryItem}
             deleteCategory={this.deleteCategory}
-          />
+          /> */}
           <div className="addTodoWrapper">
             <input
               autoFocus={true}
@@ -308,11 +323,10 @@ export default class Practice extends React.Component {
             />
 
             <button
-              className={`${"button"} ${"addButton"} ${
-                this.showButton && this.state.currentItemId === this.item.id
-                  ? "hideButton"
-                  : "showButton"
-              }`}
+              className={`${"button"} ${"addButton"} ${this.showButton && this.state.currentItemId === this.item.id
+                ? "hideButton"
+                : "showButton"
+                }`}
               type="button"
               onClick={this.addTodo}
             >
@@ -321,6 +335,8 @@ export default class Practice extends React.Component {
           </div>
 
           <TodoItemsList
+            // todos={this.state.todos}
+            todos={sameCategoryList}
             category={this.state.categories}
             handleChange={this.handleChange}
             deleteItem={this.deleteItem}
@@ -330,8 +346,8 @@ export default class Practice extends React.Component {
             currentCategory={this.state.currentCategory}
             currentItemId={this.state.currentItemId}
             toggleButton={this.toggleButton}
-            sameCategoryList={this.state.filteredTodos}
-            // filteredTodos={this.state.filteredTodos}
+
+            filteredTodos={this.state.filteredTodos}
             filteredCategory={this.state.filteredCategory}
             search={this.state.search}
             status={this.state.status}
@@ -347,7 +363,8 @@ export default class Practice extends React.Component {
           />
         </div>
         <Pagination
-          sameCategoryList={this.state.filteredTodos}
+          todos={this.state.todos}
+          sameCategoryList={sameCategoryList}
           itemsPerPage={this.state.itemsPerPage}
           currentPage={this.state.currentPage}
           currentCategory={this.state.currentCategory}

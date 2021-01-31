@@ -18,14 +18,14 @@ const todosData = [
     text: "Read some book",
     completed: true,
     date: new Date(2021, 0, 6),
-    category: "My todos",
+    category: "Hobby",
   },
   {
     id: 4,
     text: "Ride on bike",
     completed: false,
     date: new Date(),
-    category: "My todos",
+    category: "Other",
   },
 ];
 export default todosData;
@@ -33,7 +33,16 @@ export const Categories = [
   {
     id: 1,
     label: "My todos",
-    // todo: [],
+  },
+  {
+    id: 2,
+    label: "Hobby",
+
+  },
+  {
+    id: 3,
+    label: "Other",
+
   },
 ];
 

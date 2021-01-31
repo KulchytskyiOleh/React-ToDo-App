@@ -27,8 +27,8 @@ function Categories({
         {categories.length < 1 ? (
           <p className="categoryTitle">No category</p>
         ) : (
-          <p className="categoryTitle">Current category</p>
-        )}
+            <p className="categoryTitle">Current category</p>
+          )}
         <ul className="categoryListWrapper">
           {categories.map((item) =>
             currentCategory === item.label ? (
@@ -51,7 +51,7 @@ function Categories({
             ) : null
           )}
         </ul>
-        <div className="categoryItemAddWrapper">
+        {/* <div className="categoryItemAddWrapper">
           <input
             className="categoryItemAddInput"
             ref={categoryInput}
@@ -66,8 +66,8 @@ function Categories({
             }}
           >
             <i className="fa fa-plus" aria-hidden="true"></i>
-          </button>
-        </div>
+          </button> 
+        </div>*/}
       </div>
     </div>
   );

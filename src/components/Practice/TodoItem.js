@@ -11,6 +11,7 @@ export default function TodoItem({
   saveEditedText,
   currentItemId,
   currentCategory,
+  category,
 }) {
   const inputTodoEditedText = useRef(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -46,6 +47,7 @@ export default function TodoItem({
           {editedText}
         </p>
       )}
+      <span className="todoItemCategory">{category}</span>
       {showButton ? (
         <button
           className={`${"saveEditedText"} ${

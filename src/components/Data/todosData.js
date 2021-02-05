@@ -3,21 +3,21 @@ const todosData = [
     id: 1,
     text: "Go to shop",
     completed: true,
-    date: new Date(2021, 0, 1),
+    date: new Date(2021, 1, 1),
     category: "My todos",
   },
   {
     id: 2,
     text: "Buy apples",
     completed: false,
-    date: new Date(2021, 0, 12),
+    date: new Date(2021, 1, 12),
     category: "My todos",
   },
   {
     id: 3,
     text: "Read some book",
     completed: true,
-    date: new Date(2021, 0, 6),
+    date: new Date(),
     category: "Hobby",
   },
   {
@@ -37,12 +37,10 @@ export const Categories = [
   {
     id: 2,
     label: "Hobby",
-
   },
   {
     id: 3,
     label: "Other",
-
   },
 ];
 

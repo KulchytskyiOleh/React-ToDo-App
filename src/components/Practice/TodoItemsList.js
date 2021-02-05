@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import Pagination from "../Pagination/Pagination";
+import Pagination from "../Pagination/Pagination";
 import TodoItem from "./TodoItem";
 
 export default function TodoItemsList({
@@ -23,9 +23,47 @@ export default function TodoItemsList({
   status,
   month,
 }) {
-  useEffect(() => {
+  // console.log(currentCategory);
+  const [filteredTodos, setFilteredTodos] = useState([]);
 
-  }, [])
+  let filteredByCategoryTodosHandler = () => {
+    if (currentCategory === "My todos") {
+      setFilteredTodos(todos.filter((todo) => todo.category === "My todos"));
+    } else if (currentCategory === "Hobby") {
+      setFilteredTodos(todos.filter((todo) => todo.category === "Hobby"));
+    } else if (currentCategory === "Other") {
+      setFilteredTodos(todos.filter((todo) => todo.category === "Other"));
+    } else {
+      setFilteredTodos(todos);
+    }
+  };
+  let filteredByStatusTodosHandler = () => {
+    if (status === "all") {
+      setFilteredTodos(todos);
+    } else if (status === "completed") {
+      setFilteredTodos(todos.filter((todo) => todo.completed === true));
+    } else if (status === "uncompleted") {
+      setFilteredTodos(todos.filter((todo) => todo.completed === false));
+    }
+  };
+  let filteredBySearchTodosHandler = () => {
+    if (!search) {
+      setFilteredTodos(todos);
+    } else if (search) {
+      setFilteredTodos(
+        todos.filter((todo) =>
+          todo.text.toLowerCase().includes(search.trim().toLowerCase())
+        )
+      );
+    }
+  };
+
+  // useEffect(() => {
+  //   filteredByCategoryTodosHandler();
+  //   filteredByStatusTodosHandler();
+  //   filteredBySearchTodosHandler();
+  // }, [todos, currentCategory, currentDateRange, status, search]);
+
   let dayAdd = (numberDays) => {
     return new Date(
       today.getFullYear(),
@@ -56,11 +94,24 @@ export default function TodoItemsList({
   return (
     <div className="TodoItemsList">
       {todos
-        .filter(item => {
-          if (currentCategory === "Select category") return true
-          else if (currentCategory === "My todos" && item.category === currentCategory) { return true }
-          else if (currentCategory === "Hobby" && item.category === currentCategory) { return true }
-          else if (currentCategory === "Other" && item.category === currentCategory) { return true }
+        .filter((item) => {
+          if (currentCategory === "") return true;
+          else if (
+            currentCategory === "My todos" &&
+            item.category === currentCategory
+          ) {
+            return true;
+          } else if (
+            currentCategory === "Hobby" &&
+            item.category === currentCategory
+          ) {
+            return true;
+          } else if (
+            currentCategory === "Other" &&
+            item.category === currentCategory
+          ) {
+            return true;
+          }
           return false;
         })
         .filter((item) => {
@@ -135,20 +186,18 @@ export default function TodoItemsList({
           }
           return false;
         })
-
-
-
         .filter((item) =>
           item.text.toLowerCase().includes(search.trim().toLowerCase())
         )
         .reverse()
-        .filter((item, index) =>
-          Math.ceil(++index / itemsPerPage) === currentPage ? item : null
-        )
+        // .filter((item, index) =>
+        //   Math.ceil(++index / itemsPerPage) === currentPage ? item : null
+        // )
         .map((item) => (
           <TodoItem
             key={item.id}
             item={item}
+            category={item.category}
             currentItemId={currentItemId}
             handleChange={handleChange}
             deleteItem={deleteItem}
@@ -159,6 +208,14 @@ export default function TodoItemsList({
             toggleButton={toggleButton}
           />
         ))}
+      {/* <Pagination
+        todos={filteredTodos}
+        // todos={todos}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        currentCategory={currentCategory}
+        currentPageHandler={currentPageHandler}
+      /> */}
     </div>
   );
 }

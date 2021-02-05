@@ -10,21 +10,21 @@ function CategoriesSelector({
   };
 
   return (
-    <div className="categoriesSelector">
-      <form>
-        <select
-          onChange={categoryHandler}
-          daefaultValue={currentCategory}
-          name="Category list"
-        >
-          <option value="Select category">Select category</option>
-          {categories.map((item) => (
-            <option value={item.label} key={item.id}>
-              {item.label}
-            </option>
-          ))}
-        </select>
-      </form>
+    <div className="categoriesSelectorWrapper ">
+      {/* <form className="categoriesSelectorItem"> */}
+      <select
+        onChange={categoryHandler}
+        defaultValue={currentCategory}
+        name="Category list"
+      >
+        <option value="">Select category</option>
+        {categories.map((item) => (
+          <option value={item.label} key={item.id}>
+            {item.label}
+          </option>
+        ))}
+      </select>
+      {/* </form> */}
     </div>
   );
 }

@@ -51,7 +51,7 @@ function Categories({
             ) : null
           )}
         </ul>
-        {/* <div className="categoryItemAddWrapper">
+        <div className="categoryItemAddWrapper">
           <input
             className="categoryItemAddInput"
             ref={categoryInput}
@@ -67,7 +67,7 @@ function Categories({
           >
             <i className="fa fa-plus" aria-hidden="true"></i>
           </button> 
-        </div>*/}
+        </div>
       </div>
     </div>
   );

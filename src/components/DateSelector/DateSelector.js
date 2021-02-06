@@ -1,5 +1,4 @@
 import React from "react";
-import "./DateSelector.css";
 function DateSelector({ currentDateRangeHandler, currentDateRange }) {
   let dateHandler = (e) => currentDateRangeHandler(e.target.value);
   return (

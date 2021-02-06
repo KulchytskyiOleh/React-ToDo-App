@@ -1,26 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Header.css";
-import Theme from "./ThemeModal/Theme";
-// import ThemeModalWindow from "./ThemeModal/themeModalWindow/themeModalWindow";
-let Header = ({
-  displayThemeMenu,
-  setDisplayThemeMenu,
-  displayModalWindow,
-  setDisplayModalWindow,
-  todosData,
-}) => {
+
+let Header = () => {
   return (
     <header className="header">
-      <>
-        <span className="headerSlogan">React ToDo App</span>
-        <Theme
-          todosData={todosData}
-          displayThemeMenu={displayThemeMenu}
-          setDisplayThemeMenu={setDisplayThemeMenu}
-          displayModalWindow={displayModalWindow}
-          setDisplayModalWindow={setDisplayModalWindow}
-        />
-      </>
+      <span className="headerSlogan">React ToDo App</span>
     </header>
   );
 };

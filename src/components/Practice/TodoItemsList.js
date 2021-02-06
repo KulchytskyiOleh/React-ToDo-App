@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Pagination from "../Pagination/Pagination";
+import React from "react";
+// import Pagination from "../Pagination/Pagination";
 import TodoItem from "./TodoItem";
 
 export default function TodoItemsList({
@@ -11,22 +11,19 @@ export default function TodoItemsList({
   toggleButton,
   saveEditedText,
   deleteItem,
-  itemsPerPage,
-  currentPage,
-  currentPageHandler,
+  // itemsPerPage,
+  // currentPage,
+  // currentPageHandler,
   currentItemId,
   currentCategory,
   currentDateRange,
-  category,
-  sameCategoryList,
   today,
   status,
   month,
 }) {
-  // console.log(currentCategory);
-  const [filteredTodos, setFilteredTodos] = useState([]);
+  // const [filteredTodos, setFilteredTodos] = useState([]);
 
-  let filteredByCategoryTodosHandler = () => {
+  /* let filteredByCategoryTodosHandler = () => {
     if (currentCategory === "My todos") {
       setFilteredTodos(todos.filter((todo) => todo.category === "My todos"));
     } else if (currentCategory === "Hobby") {
@@ -56,7 +53,7 @@ export default function TodoItemsList({
         )
       );
     }
-  };
+  }; */
 
   // useEffect(() => {
   //   filteredByCategoryTodosHandler();
@@ -208,14 +205,6 @@ export default function TodoItemsList({
             toggleButton={toggleButton}
           />
         ))}
-      {/* <Pagination
-        todos={filteredTodos}
-        // todos={todos}
-        itemsPerPage={itemsPerPage}
-        currentPage={currentPage}
-        currentCategory={currentCategory}
-        currentPageHandler={currentPageHandler}
-      /> */}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Sidebar.css";
-import Modal from "../Modal/Modal";
+import ModalWrapper from "../Modal/Modal";
 export default function Sidebar({
   showSideBar,
   showModal,
@@ -15,7 +15,6 @@ export default function Sidebar({
   const [modal, setModal] = useState(showModal);
   let sidebarToggleHandler = () => setSidebar(() => !sidebar);
   let modalToggleHandler = () => setModal(() => !modal);
-  // let statusHandler = (e) => statusSwitchHandler(e.target.value);
   let allTodosToggleHandler = () => {
     setDisplayAllTodos(!displayAllTodos);
   };
@@ -41,7 +40,7 @@ export default function Sidebar({
           setModal("");
         }}
       >
-        <i className={sidebar ? "fa fa-times" : "fa fa-bars"}/>
+        <i className={sidebar ? "fa fa-times" : "fa fa-bars"} />
       </button>
       <aside className={`${sidebar ? "sidebar active" : "sidebar"}`}>
         <div className="sidebar-items">
@@ -84,7 +83,7 @@ export default function Sidebar({
           </button>
         </div>
       </aside>
-      {modal ? <Modal modal={modal} setModal={setModal} /> : null}
+      {modal ? <ModalWrapper modal={modal} setModal={setModal} /> : null}
     </>
   );
 }

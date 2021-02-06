@@ -1,49 +1,127 @@
 .Modal {
   position: absolute;
   background: #c0c0c0;
-  border: 2px solid #000000;
-  padding: 40px;
+  border: 2px solid #00000050;
+  border-radius: 25px;
+  padding: 30px;
   display: grid;
-  max-height: 200px;
-  max-width: 300px;
+  min-height: 500px;
+  min-width: 300px;
   left: 50%;
-  top: 55%;
+  top: 50%;
   transform: translate(-50%, -50%);
-  z-index: 40;
+  box-shadow: 0 15px 25px rgb(0 0 0 / 50%);
+  /* z-index: 40; */
+}
+.inputModal {
+  border: none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+}
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 .modalWrapper {
-  position: relative;
   display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-areas:
+    "modalWrapperForm "
+    "modalWrapperButtons";
+  gap: 10%;
 }
 .modalWrapperForm {
+  grid-area: modalWrapperForm;
   display: grid;
-  justify-items: end;
-  margin-bottom: 10px;
+  gap: 15px;
+  grid-template-areas:
+    "contact"
+    "userNameWrapper"
+    "emailWrapper"
+    "messageWrapper";
+}
+.Contact {
+  grid-area: contact;
+  justify-self: center;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgb(0, 0, 0);
 }
 .userNameWrapper {
-  justify-content: end;
+  grid-area: userNameWrapper;
+  display: grid;
+  grid-template-rows: 0.1fr 1fr;
+  grid-template-areas:
+    "nameTitle"
+    "userNameInput";
 }
 .nameTitle {
+  grid-area: nameTitle;
 }
 .userNameInput {
+  grid-area: userNameInput;
 }
 
 .messageWrapper {
+  grid-area: messageWrapper;
+  grid-area: messageWrapper;
+  display: grid;
+  grid-template-rows: 0.1fr 1fr;
+  grid-template-areas:
+    "messageTitle"
+    "messageInput";
 }
 .messageTitle {
+  grid-area: messageTitle;
 }
 .messageInput {
+  grid-area: messageInput;
 }
 
 .emailWrapper {
+  grid-area: emailWrapper;
+  display: grid;
+  grid-template-rows: 0.1fr 1fr;
+  grid-template-areas:
+    "emailTitle"
+    "emailInput";
 }
 .emailTitle {
+  grid-area: emailTitle;
 }
 .emailInput {
+  grid-area: emailInput;
 }
 
 .modalWrapperButtons {
   display: grid;
-  gap: 15%;
-  margin-bottom: 10px;
+  gap: 10%;
+  grid-template-columns: 0.1fr 1fr 0.1fr;
+  grid-template-rows: repeat(3, 0.3fr);
+  grid-template-areas:
+    ". submitButton ."
+    ". resetButton ."
+    ". closeButton .";
+}
+.modalButton {
+  border-radius: 15px;
+}
+
+button.modalButton:hover {
+  background-color: #8f8f8f;
+  color: #ffffff;
+  border: 2px solid #00000050;
+  text-shadow: 1px 1px 2px rgb(0, 0, 0);
+}
+.submitButton {
+  grid-area: submitButton;
+}
+.resetButton {
+  grid-area: resetButton;
+}
+.closeButton {
+  grid-area: closeButton;
 }

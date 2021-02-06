@@ -1,4 +1,4 @@
-import React /* useState */ from "react";
+import React from "react";
 
 function CategoriesSelector({
   categories,
@@ -11,8 +11,8 @@ function CategoriesSelector({
 
   return (
     <div className="categoriesSelectorWrapper ">
-      {/* <form className="categoriesSelectorItem"> */}
       <select
+        className="categoriesSelector"
         onChange={categoryHandler}
         defaultValue={currentCategory}
         name="Category list"
@@ -24,7 +24,7 @@ function CategoriesSelector({
           </option>
         ))}
       </select>
-      {/* </form> */}
+
     </div>
   );
 }

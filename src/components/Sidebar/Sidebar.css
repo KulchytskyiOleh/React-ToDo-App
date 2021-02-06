@@ -24,10 +24,17 @@ button.menu-bars {
   display: grid;
   align-self: center;
   justify-content: center;
-  margin: 5px;
+  margin: 15px;
 }
 .sidebar-items > button {
   cursor: pointer;
-  margin: 5px;
-  padding: 5px;
+  margin: 15px;
+  padding: 10px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+.sidebar-items > button:hover {
+  background-color: #000000;
+  color: #ffffff;
 }

@@ -13,9 +13,11 @@ button {
   height: auto;
   padding-bottom: 1.5%;
   position: relative;
+  /* height: 7vh; */
 }
 .main_Practice {
   max-width: 1920px;
+  max-height: fit-content;
   margin: auto;
   display: grid;
   grid-template-areas:
@@ -26,23 +28,23 @@ button {
   display: grid;
   grid-area: todoList;
   height: max-content;
-  background-color: #add8e6;
+  /* background-color: #add8e6; */
   align-self: stretch;
   align-content: start;
 }
 .todo-item {
-  background-color: #f8fc11;
+  background-color: #f8e16c;
   margin: 15px;
   padding: 1.5%;
   border-radius: 15px;
   display: grid;
   grid-template-columns: 0.5fr 6.5fr 1fr repeat(2, 0.5fr);
   align-items: center;
-  gap: 1%;
+  gap: 5px;
   cursor: pointer;
 }
 .todo-item:nth-child(odd) {
-  background-color: #fca311;
+  background-color: #fca211d5;
 }
 .checkBoxItem {
   justify-self: center;
@@ -57,7 +59,7 @@ button {
   padding-left: 15px;
 }
 .todoItemCategory {
-  background-color: lightblue;
+  background-color: rgba(0, 153, 255, 0.521);
   border-radius: 5px;
   justify-self: center;
   align-self: center;
@@ -76,7 +78,7 @@ button {
   color: #ffffff;
 }
 .saveEditedText {
-  background-color: #30ac30;
+  background-color: #30ac30cb;
   justify-self: center;
   padding: 6px;
   border: 1px solid #000000;
@@ -91,7 +93,7 @@ button {
 
 .todoItemDelete {
   color: #ffffff;
-  background-color: #ff0000;
+  background-color: #ff0000be;
   border: 1px solid #000000;
   padding: 6px;
   border-radius: 5px;
@@ -117,6 +119,12 @@ button {
   justify-self: center;
   align-self: stretch;
 }
+.dateSelector {
+  border-radius: 10px;
+}
+.categoriesSelector {
+  border-radius: 10px;
+}
 .searchWrapper {
   grid-area: searchWrapper;
   align-self: center;
@@ -127,14 +135,15 @@ button {
   justify-self: center;
   align-self: stretch;
 }
-/* .categoriesSelectorItem {
-  justify-self: stretch;
-} */
+
 .addTodoWrapper {
+  margin: 10px auto 0px auto;
   grid-area: addTodoWrapper;
-  background-color: #ffff00;
+  border: 2px solid #79797969;
+  background-color: #a4b8c4;
+  border-radius: 15px;
   display: grid;
-  width: 100%;
+  width: 97%;
   grid-template-columns: auto;
   grid-template-rows: 1fr;
   gap: 5px 10px;
@@ -145,10 +154,9 @@ button {
   display: grid;
   margin: auto;
   width: 90%;
-  grid-template-columns: 3fr 0.8fr 0.5fr;
+  grid-template-columns: 3fr 0.8fr 0.4fr;
   grid-template-rows: 0.1fr 1fr 0.1fr;
   gap: 5px 15px;
-
   grid-template-areas:
     ". . ."
     "inputTodoText addTodoSelect addButton"
@@ -160,13 +168,18 @@ button {
   min-width: 50px;
   padding: 10px 30px;
   border-radius: 5px;
-  background-color: #fa9a9a;
+  background-color: #d3d3d3;
   justify-self: stretch;
   align-self: center;
+}
+input.inputTodoText::placeholder {
+  color: rgb(0, 0, 0);
 }
 .addTodoSelect {
   grid-area: addTodoSelect;
   text-align: center;
+  background-color: #f8e16c;
+  border-radius: 10px;
   min-width: 50px;
 }
 .addButton {
@@ -180,7 +193,7 @@ button {
 }
 
 .countTodosButton {
-  background-color: #ff0000;
+  background-color: #ff00008f;
   color: #05668d;
 }
 

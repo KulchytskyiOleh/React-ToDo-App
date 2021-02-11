@@ -14,7 +14,7 @@ export default class Practice extends React.Component {
     this.newTodoItemCategory = React.createRef();
 
     this.state = {
-      text: "",
+      // text: "",
       search: "",
       status: "all",
       currentItemId: 0,
@@ -26,10 +26,12 @@ export default class Practice extends React.Component {
       todos: todosData,
       categories: Categories,
       currentCategory: "",
-      filteredCategory: [],
+      // filteredCategory: [],
       currentDateRange: "",
       today: new Date(),
       month,
+      itemsPerPage: 4,
+      currentPage: 1,
       newTodoCategory: "",
     };
   }
@@ -54,6 +56,7 @@ export default class Practice extends React.Component {
     };
     this.setState({ todos: [...todos, newTodo] });
     this.newTodoItem.current.value = "";
+    this.setState({ currentPage: 1 });
   };
 
   addTodo = () => {
@@ -70,7 +73,7 @@ export default class Practice extends React.Component {
       }
       if (
         item.text === this.newTodoItem.current.value &&
-        this.state.currentCategory === item.category
+        this.state.newTodoCategory === item.category
       ) {
         success = false;
         messageErrors = "This element already exists";
@@ -111,7 +114,6 @@ export default class Practice extends React.Component {
     this.setState((prevState) => ({
       todos: prevState.todos.filter((todo) => (todo.id !== id ? todo : null)),
     }));
-
   };
 
   toggleButton = (showButton) => this.setState({ showButton });
@@ -125,7 +127,7 @@ export default class Practice extends React.Component {
   newTodoCategoryHandler = (e) => {
     this.setState({ newTodoCategory: e.target.value });
   };
-  newTodoCategoryHandlerClear = (e) => this.setState({ newTodoCategory: "" });
+  newTodoCategoryHandlerClear = () => this.setState({ newTodoCategory: "" });
 
   categorySwitchHandler = (currentCategory) => {
     this.setState({ currentCategory });
@@ -134,9 +136,9 @@ export default class Practice extends React.Component {
   currentDateRangeHandler = (currentDateRange) =>
     this.setState({ currentDateRange });
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentDidUpdate() { }
+  componentDidUpdate() {}
 
   render() {
     return (
@@ -163,22 +165,6 @@ export default class Practice extends React.Component {
           />
         </div>
         <div className="main_Practice">
-          {/* <Categories
-            todos={this.state.todos}
-            currentCategory={this.state.currentCategory}
-            newTodoItem={this.newTodoItem}
-            currentCategoryHandler={this.currentCategoryHandler}
-            currentCategoryId={this.state.currentCategoryId}
-            showCategorySaveButton={this.state.showCategorySaveButton}
-            categories={this.state.categories}
-            categoriesHandler={this.categoriesHandler}
-            addCategory={this.addCategory}
-            addNewCategory={this.addNewCategory}
-            editCategoryItem={this.editCategoryItem}
-            saveEditedCategoryItem={this.saveEditedCategoryItem}
-            deleteCategoryItem={this.deleteCategoryItem}
-            deleteCategory={this.deleteCategory}
-          /> */}
           <div className="addTodoWrapper">
             <form className="addTodoWrapperForm">
               <input
@@ -202,10 +188,11 @@ export default class Practice extends React.Component {
                 ))}
               </select>
               <button
-                className={`${"button"} ${"addButton"} ${this.showButton && this.state.currentItemId === this.item.id
-                  ? "hideButton"
-                  : "showButton"
-                  }`}
+                className={`${"button"} ${"addButton"} ${
+                  this.showButton && this.state.currentItemId === this.item.id
+                    ? "hideButton"
+                    : "showButton"
+                }`}
                 type="button"
                 onClick={this.addTodo}
               >
@@ -231,16 +218,11 @@ export default class Practice extends React.Component {
             currentDateRange={this.state.currentDateRange}
             today={this.state.today}
             month={this.state.month}
+            currentPage={this.state.currentPage}
+            itemsPerPage={this.state.itemsPerPage}
+            currentPageHandler={this.currentPageHandler}
           />
         </div>
-        {/* <Pagination
-          todos={this.state.todos}
-          sameCategoryList={sameCategoryList}
-          itemsPerPage={this.state.itemsPerPage}
-          currentPage={this.state.currentPage}
-          currentCategory={this.state.currentCategory}
-          currentPageHandler={this.currentPageHandler}
-        /> */}
       </div>
     );
   }

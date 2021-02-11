@@ -4,9 +4,7 @@
 .Active {
   display: grid;
   justify-content: center;
-  /* align-content: end; */
   margin-top: 10px;
-  /* display: block; */
 }
 
 .Paginate > ul {
@@ -23,10 +21,18 @@
   margin-right: auto;
   border-radius: 3px;
   padding: 3px;
-  background-color: lightblue;
+  border: 1px solid #000000;
+  background-color: #ffffff;
   color: #000000;
 }
+
 .Paginate > ul > li > button.ActivePage {
-  background-color: #0000ff;
+  background-color: #000000;
+  padding: 5px;
+  color: #ffffff;
+}
+
+.Paginate > ul > li > button:hover {
+  background-color: #808080;
   color: #ffffff;
 }

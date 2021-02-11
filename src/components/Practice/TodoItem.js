@@ -5,12 +5,11 @@ export default function TodoItem({
   showButton,
   item,
   handleChange,
-  toggleButton,
-  deleteItem,
   textEdit,
   saveEditedText,
+  deleteItem,
+  toggleButton,
   currentItemId,
-  currentCategory,
   category,
 }) {
   const inputTodoEditedText = useRef(null);

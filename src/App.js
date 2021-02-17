@@ -2,30 +2,25 @@ import React, { useState } from "react";
 import Header from "./components/Header/Header";
 import Content from "./components/Content/Content";
 import Footer from "./components/Footer/Footer";
+import ThemeContext, { themes } from "./components/Header/theme-context";
 
 function App({ todosData, contacts, Categories, month }) {
-  const [displayThemeMenu, setDisplayThemeMenu] = useState(false);
-  const [displayModalWindow, setDisplayModalWindow] = useState(false);
-
+  const [theme, setTheme] = useState(themes.light);
+  const toggleTheme = () => {
+    theme === themes.dark ? setTheme(themes.light) : setTheme(themes.dark);
+  };
   return (
-    <div className="App">
-      <Header
-        displayThemeMenu={displayThemeMenu}
-        setDisplayThemeMenu={setDisplayThemeMenu}
-        displayModalWindow={displayModalWindow}
-        setDisplayModalWindow={setDisplayModalWindow}
+    <ThemeContext.Provider value={theme}>
+      <Header theme={theme} toggleTheme={toggleTheme} setTheme={setTheme} />
+      <Content
+        setTheme={setTheme}
+        className="content"
         todosData={todosData}
+        Categories={Categories}
+        month={month}
       />
-      <>
-        <Content
-          className="content"
-          todosData={todosData}
-          Categories={Categories}
-          month={month}
-        />
-      </>
       <Footer contacts={contacts} />
-    </div>
+    </ThemeContext.Provider>
   );
 }
 export default App;

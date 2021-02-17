@@ -1,38 +1,32 @@
 import React from "react";
 import TodoItemsList from "./TodoItemsList";
-// import Pagination from "../Pagination/Pagination";
-// import Status from "../Status/Status";
-// import Categories from "../Categories/Categories";
-import Search from "../Search/Search";
+import { Search } from "../Search/Search";
 import DateSelector from "../DateSelector/DateSelector";
 import Sidebar from "../Sidebar/Sidebar";
 import CategoriesSelector from "../Categories/CategoriesSelector";
+import { AddForm } from "../AddForm/AddForm";
+import { ViewChangeButton } from "../ViewButton/ViewChangeButton.jsx";
 export default class Practice extends React.Component {
-  constructor({ todosData, Categories, categoryList, month }) {
+  constructor({ todosData, Categories, month }) {
     super();
-    this.newTodoItem = React.createRef();
     this.newTodoItemCategory = React.createRef();
-
     this.state = {
-      // text: "",
       search: "",
       status: "all",
       currentItemId: 0,
-      currentCategoryId: 0,
       showButton: false,
       showSideBar: false,
       showModal: false,
-      displayModal: false,
+      view: false,
       todos: todosData,
       categories: Categories,
       currentCategory: "",
-      // filteredCategory: [],
       currentDateRange: "",
+      newTodoCategory: "",
       today: new Date(),
       month,
       itemsPerPage: 4,
       currentPage: 1,
-      newTodoCategory: "",
     };
   }
 
@@ -45,24 +39,23 @@ export default class Practice extends React.Component {
     }));
   };
 
-  addNewTodo = () => {
+  addNewTodo = (text) => {
     const { todos, newTodoCategory } = this.state;
     let newTodo = {
       id: Date.now(),
-      text: this.newTodoItem.current.value,
+      text,
       completed: false,
       date: new Date(),
       category: newTodoCategory,
     };
     this.setState({ todos: [...todos, newTodo] });
-    this.newTodoItem.current.value = "";
     this.setState({ currentPage: 1 });
   };
 
-  addTodo = () => {
+  addTodo = (text) => {
     let success = true;
     let messageErrors = "";
-    if (this.newTodoItem.current.value.length === 0) {
+    if (text.length === 0) {
       success = false;
       messageErrors = "Please enter your todo";
     }
@@ -71,10 +64,7 @@ export default class Practice extends React.Component {
         success = false;
         messageErrors = "Please choose your category";
       }
-      if (
-        item.text === this.newTodoItem.current.value &&
-        this.state.newTodoCategory === item.category
-      ) {
+      if (item.text === text && this.state.newTodoCategory === item.category) {
         success = false;
         messageErrors = "This element already exists";
       }
@@ -82,7 +72,7 @@ export default class Practice extends React.Component {
     });
 
     if (success) {
-      this.addNewTodo();
+      this.addNewTodo(text);
       this.newTodoCategoryHandlerClear();
     } else {
       alert(messageErrors);
@@ -99,7 +89,6 @@ export default class Practice extends React.Component {
         }
         return todo;
       }),
-      // currentItemId: id,
     }));
   };
 
@@ -120,7 +109,7 @@ export default class Practice extends React.Component {
 
   statusSwitchHandler = (status) => this.setState({ status });
 
-  handleSearch = (search) => this.setState({ search, currentPage: 1 });
+  handleSearch = (search) => this.setState({ search });
 
   currentPageHandler = (currentPage) => this.setState({ currentPage });
 
@@ -136,9 +125,11 @@ export default class Practice extends React.Component {
   currentDateRangeHandler = (currentDateRange) =>
     this.setState({ currentDateRange });
 
-  componentDidMount() {}
+  itemsPerPageHandler = (itemsPerPage) => this.setState({ itemsPerPage });
 
-  componentDidUpdate() {}
+  viewToggle = () => {
+    this.setState((prevState) => ({ view: !prevState.view }));
+  };
 
   render() {
     return (
@@ -150,9 +141,13 @@ export default class Practice extends React.Component {
           showModal={this.state.showModal}
         />
         <div className="practiceTop">
-          <div className="searchWrapper">
-            <Search onSearch={this.handleSearch} />
-          </div>
+          <ViewChangeButton
+            view={this.state.view}
+            viewToggle={this.viewToggle}
+          />
+
+          <Search onSearch={this.handleSearch} />
+
           <DateSelector
             currentDateRangeHandler={this.currentDateRangeHandler}
             todos={this.state.todos}
@@ -165,42 +160,12 @@ export default class Practice extends React.Component {
           />
         </div>
         <div className="main_Practice">
-          <div className="addTodoWrapper">
-            <form className="addTodoWrapperForm">
-              <input
-                autoFocus={true}
-                className="input inputTodoText"
-                type="text"
-                ref={this.newTodoItem}
-                placeholder="Add some new todo here..."
-                required
-              />
-              <select
-                value={this.state.newTodoCategory}
-                className="addTodoSelect"
-                onChange={this.newTodoCategoryHandler}
-              >
-                <option>Choose category</option>
-                {this.state.categories.map((item) => (
-                  <option value={item.label} key={item.id}>
-                    {item.label}
-                  </option>
-                ))}
-              </select>
-              <button
-                className={`${"button"} ${"addButton"} ${
-                  this.showButton && this.state.currentItemId === this.item.id
-                    ? "hideButton"
-                    : "showButton"
-                }`}
-                type="button"
-                onClick={this.addTodo}
-              >
-                <i className="fas fa-plus-square" />
-              </button>
-            </form>
-          </div>
-
+          <AddForm
+            categories={this.state.categories}
+            newTodoCategory={this.state.newTodoCategory}
+            addTodo={this.addTodo}
+            newTodoCategoryHandler={this.newTodoCategoryHandler}
+          />
           <TodoItemsList
             todos={this.state.todos}
             category={this.state.categories}
@@ -212,14 +177,15 @@ export default class Practice extends React.Component {
             currentCategory={this.state.currentCategory}
             currentItemId={this.state.currentItemId}
             toggleButton={this.toggleButton}
-            filteredCategory={this.state.filteredCategory}
             search={this.state.search}
+            view={this.state.view}
             status={this.state.status}
             currentDateRange={this.state.currentDateRange}
             today={this.state.today}
             month={this.state.month}
             currentPage={this.state.currentPage}
             itemsPerPage={this.state.itemsPerPage}
+            itemsPerPageHandler={this.itemsPerPageHandler}
             currentPageHandler={this.currentPageHandler}
           />
         </div>

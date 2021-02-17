@@ -11,7 +11,7 @@ function Footer(props) {
       social={item.social.linkedin}
     />
   ));
-  return <footer>{about}</footer>;
+  return <footer className="footer">{about}</footer>;
 }
 
 export default Footer;

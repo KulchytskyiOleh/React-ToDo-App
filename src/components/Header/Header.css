@@ -1,15 +1,26 @@
 .header {
-  background-color: #282c34;
   min-height: 10vh;
   display: grid;
   font-size: calc(10px + 2vmin);
   grid-area: header;
   grid-template-areas: ". headerSlogan themeModal";
-
   align-content: center;
 }
-.headerSlogan {
+.header--light {
+  color: #000000;
+  background-color: #05668d;
+}
+.header--dark {
   color: #ffffff;
+  background-color: #022e3f;
+}
+.button--light {
+  color: #000000;
+}
+.button--dark {
+  color: #ffffff;
+}
+.headerSlogan {
   grid-area: headerSlogan;
   justify-self: center;
 }
@@ -18,10 +29,7 @@
   display: grid;
   grid-area: themeModal;
   justify-self: center;
-  /* padding: 50px; */
-  /* background-color: #6563c7; */
 }
 .themeModalButton {
-  /* margin: 5px; */
-  padding: 10px;
+  background-color: inherit;
 }

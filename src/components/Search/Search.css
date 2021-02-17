@@ -1,6 +1,7 @@
 .searchWrapper {
-  grid-area: 1/2/1/2;
-  min-width: 100px;
+  grid-area: searchWrapper;
+  align-self: center;
+  min-width: 50px;
 }
 .inputSearchTodoText {
   background-color: #dcfae9;
@@ -9,6 +10,4 @@
   padding: 10px 0px;
   justify-self: center;
   align-self: stretch;
-  /* min-width: 50px; */
-  /* align-self: stretch; */
 }

@@ -2,6 +2,7 @@
   display: none;
 }
 .Active {
+  grid-area: pagination;
   display: grid;
   justify-content: center;
   margin-top: 10px;
@@ -27,7 +28,7 @@
 }
 
 .Paginate > ul > li > button.ActivePage {
-  background-color: #000000;
+  background-color: #161e64;
   padding: 5px;
   color: #ffffff;
 }

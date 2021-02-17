@@ -1,19 +1,25 @@
-import React, { /* useState, */ useEffect } from "react";
+import React, { useEffect } from "react";
 import "./Pagination.css";
-function Pagination({ todos, itemsPerPage, currentPage, currentPageHandler }) {
+function Pagination({
+  todos,
+  itemsPerPage,
+  currentPage,
+  currentPageHandler,
+  currentTodos,
+}) {
   let numberOfPage = [];
   let numberOfItems = todos.length;
   let paginateItemsCounter = Math.ceil(numberOfItems / itemsPerPage);
+  let numberTodos = currentTodos.length;
   for (let i = 1; i <= paginateItemsCounter; i++) {
     numberOfPage.push(i);
   }
   useEffect(() => {
-    if (currentPage === 1) {
-      currentPageHandler(1);
-    } else if (currentPage) {
+    if (numberTodos === 0) {
       currentPageHandler(paginateItemsCounter);
     }
-  }, [currentPage, currentPageHandler, paginateItemsCounter]);
+  }, [currentPage, currentPageHandler, paginateItemsCounter, numberTodos]);
+
   return (
     <div className={numberOfPage.length <= 1 ? "Paginate" : "Paginate Active"}>
       <ul>
@@ -23,14 +29,16 @@ function Pagination({ todos, itemsPerPage, currentPage, currentPageHandler }) {
               currentPageHandler(currentPage <= 1 ? 1 : currentPage - 1);
             }}
           >
-            &laquo;
+            <i className="fas fa-angle-double-left fa-sm" />
           </button>
         </li>
         {numberOfPage.map((number) => (
           <li key={number}>
             <button
               className={currentPage === number ? "ActivePage" : null}
-              onClick={() => currentPageHandler(number)}
+              onClick={() => {
+                currentPageHandler(number);
+              }}
             >
               {number}
             </button>
@@ -46,7 +54,7 @@ function Pagination({ todos, itemsPerPage, currentPage, currentPageHandler }) {
               )
             }
           >
-            &raquo;
+            <i className="fas fa-angle-double-right" />
           </button>
         </li>
       </ul>

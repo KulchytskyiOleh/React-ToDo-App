@@ -12,7 +12,7 @@ function CategoriesSelector({
   return (
     <div className="categoriesSelectorWrapper ">
       <select
-        className="categoriesSelector"
+        className="selectorTop categoriesSelector"
         onChange={categoryHandler}
         defaultValue={currentCategory}
         name="Category list"

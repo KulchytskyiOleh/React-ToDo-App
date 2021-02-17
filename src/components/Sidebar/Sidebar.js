@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import "./Sidebar.css";
 import ModalWrapper from "../Modal/Modal";
+import ThemeContext from "../Header/theme-context";
 export default function Sidebar({
-  showSideBar,
-  showModal,
   status,
+  showModal,
+  showSideBar,
   statusSwitchHandler,
 }) {
   const uncompletedTodos = useRef(null);
@@ -13,12 +14,13 @@ export default function Sidebar({
   const [displayAllTodos, setDisplayAllTodos] = useState(true);
   const [sidebar, setSidebar] = useState(showSideBar);
   const [modal, setModal] = useState(showModal);
+  const themes = useContext(ThemeContext);
+
   let sidebarToggleHandler = () => setSidebar(() => !sidebar);
   let modalToggleHandler = () => setModal(() => !modal);
   let allTodosToggleHandler = () => {
     setDisplayAllTodos(!displayAllTodos);
   };
-
   useEffect(() => {
     if (status === "completed") {
       return setSidebar(null);
@@ -40,9 +42,17 @@ export default function Sidebar({
           setModal("");
         }}
       >
-        <i className={sidebar ? "fa fa-times" : "fa fa-bars"} />
+        <i
+          className={`${sidebar ? "fa fa-times fa-2x" : "fa fa-bars fa-2x"} ${
+            themes.button
+          }`}
+        />
       </button>
-      <aside className={`${sidebar ? "sidebar active" : "sidebar"}`}>
+      <aside
+        className={`${sidebar ? "sidebar active" : "sidebar"} ${
+          themes["sidebar.wrapper"]
+        } `}
+      >
         <div className="sidebar-items">
           <button
             value="uncompleted"

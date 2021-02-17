@@ -1,34 +1,51 @@
 * {
-  outline-style: none;
-  list-style-type: none;
   margin: 0;
   padding: 0;
+  outline-style: none;
+  list-style-type: none;
 }
 button {
   border: none;
   cursor: pointer;
 }
+
 .content {
-  background-color: #c0c0c0;
   height: auto;
   padding-bottom: 1.5%;
   position: relative;
-  /* height: 7vh; */
+}
+.content--light {
+  background-color: #c0c0c0;
+}
+.content--dark {
+  background-color: #00161f;
 }
 .main_Practice {
   max-width: 1920px;
-  max-height: fit-content;
   margin: auto;
   display: grid;
+  justify-content: center;
   grid-template-areas:
     ". addTodoWrapper ."
-    ". todoList .";
+    ". toDoListWrapper .";
+}
+.toDoListWrapper {
+  display: grid;
+  max-width: 750px;
+  justify-self: center;
+  grid-area: toDoListWrapper;
+  grid-template-columns: minmax(0.2fr, 1fr);
+  grid-template-rows: auto 0.2fr;
+  padding: 10px 0px;
+  grid-gap: 10px;
+  grid-template-areas:
+    "todoList"
+    "pagination";
 }
 .TodoItemsList {
   display: grid;
   grid-area: todoList;
   height: max-content;
-  /* background-color: #add8e6; */
   align-self: stretch;
   align-content: start;
 }
@@ -39,34 +56,80 @@ button {
   border-radius: 15px;
   display: grid;
   grid-template-columns: 0.5fr 6.5fr 1fr repeat(2, 0.5fr);
+  grid-template-areas: "checkBoxItem todoItemText todoItemCategory textEdit todoItemDelete";
   align-items: center;
   gap: 5px;
   cursor: pointer;
 }
+
 .todo-item:nth-child(odd) {
   background-color: #fca211d5;
 }
-.checkBoxItem {
+.TodoItemsGridList {
+  display: grid;
+  grid-area: todoList;
+  height: max-content;
+  grid-gap: 20px;
+  padding: 10px;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+}
+.todo-item-grid {
+  background-color: #f8e16c;
+  padding: 15px 0px;
+  margin: 10px 0px;
+  width: 200px;
+  border-radius: 15px;
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 0.8fr 0.1fr 0.2fr;
+  grid-template-areas:
+    "todoItemText todoItemText todoItemText"
+    "todoItemCategory todoItemCategory todoItemCategory "
+    "checkBoxItem textEdit todoItemDelete ";
+}
+
+.todo-item-grid:nth-child(odd) {
+  background-color: #fca211d5;
+}
+.todoItemInputGrid {
+  grid-area: todoItemText;
   justify-self: center;
+  min-width: 5%;
+  max-width: 90%;
+}
+
+.checkBoxItem {
+  grid-area: checkBoxItem;
+  justify-self: center;
+  align-self: center;
 }
 .todoItemInput {
+  grid-area: todoItemText;
   min-width: 50px;
 }
-.todo-item > p {
+.todoText {
+  grid-area: todoItemText;
   color: #000000;
   justify-self: start;
   word-break: break-word;
-  padding-left: 15px;
+  padding: 0px 10px;
 }
 .todoItemCategory {
-  background-color: rgba(0, 153, 255, 0.521);
+  grid-area: todoItemCategory;
+  background-color: rgba(0, 153, 255, 0.61);
   border-radius: 5px;
   justify-self: center;
   align-self: center;
-  /* word-break: break-word; */
+  color: #000000;
+  font-size: calc(0.6em + 1vmin);
   padding: 5px;
 }
 .textEdit {
+  grid-area: textEdit;
   padding: 6px;
   border-radius: 5px;
   background-color: #c0c0c0;
@@ -76,22 +139,19 @@ button {
 .textEdit:hover {
   background-color: #5e5e5e;
   color: #ffffff;
+  border: 1px solid #ffffff;
 }
 .saveEditedText {
+  grid-area: textEdit;
   background-color: #30ac30cb;
   justify-self: center;
   padding: 6px;
   border: 1px solid #000000;
   border-radius: 5px;
 }
-.showButton {
-  display: block;
-}
-.hideButton {
-  display: none;
-}
 
 .todoItemDelete {
+  grid-area: todoItemDelete;
   color: #ffffff;
   background-color: #ff0000be;
   border: 1px solid #000000;
@@ -103,15 +163,25 @@ button {
   background-color: #ffffff;
   color: #000000;
 }
-
+.showButton {
+  display: block;
+}
+.hideButton {
+  display: none;
+}
 .practiceTop {
   background-color: #05668d;
   height: auto;
   display: grid;
   padding: 15px;
   gap: 15px;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-areas: "dateSelectorWrapper searchWrapper categoriesSelector";
+  grid-template-columns: 0.1fr 1fr 1fr 1fr;
+  grid-template-areas: "viewChangeButton dateSelectorWrapper searchWrapper categoriesSelector";
+}
+.viewChangeButton {
+  grid-area: viewChangeButton;
+  cursor: pointer;
+  background-color: inherit;
 }
 .dateSelectorWrapper {
   display: grid;
@@ -119,23 +189,17 @@ button {
   justify-self: center;
   align-self: stretch;
 }
-.dateSelector {
+.selectorTop {
   border-radius: 10px;
+  min-width: 50px;
 }
-.categoriesSelector {
-  border-radius: 10px;
-}
-.searchWrapper {
-  grid-area: searchWrapper;
-  align-self: center;
-}
+
 .categoriesSelectorWrapper {
   display: grid;
   grid-area: categoriesSelector;
   justify-self: center;
   align-self: stretch;
 }
-
 .addTodoWrapper {
   margin: 10px auto 0px auto;
   grid-area: addTodoWrapper;
@@ -191,74 +255,16 @@ input.inputTodoText::placeholder {
   justify-self: stretch;
   align-self: center;
 }
-
 .countTodosButton {
   background-color: #ff00008f;
   color: #05668d;
 }
-
 p.todoText {
-  color: #000000;
-  padding-left: 15px;
+  /* color: #000000; */
+  /* padding-left: 15px; */
 }
 p.Completed {
   color: #008000;
   font-style: italic;
   text-decoration: line-through;
 }
-
-/* @media screen and (max-width: 600px) {
-  .main_Practice {
-    max-width: 100%;
-    display: grid;
-    grid-template-columns: 2fr;
-   
-    grid-template-areas:
-      "addTodoWrapper"
-      "todoList";
-    justify-items: center;
-  }
-  .addTodoWrapper {
-    background-color: #ffff00;
-    display: grid;
-    width: 95%;
-    grid-template-columns: auto;
-    grid-template-rows: 1fr;
-    gap: 5px 10px;
-  }
-  .addTodoWrapperForm {
-    display: grid;
-    margin: auto;
-    width: 90%;
-    grid-template-columns: 3fr 0.8fr 0.5fr;
-    grid-template-rows: 1fr;
-    gap: 5px 15px;
-    grid-template-areas: "inputTodoText addTodoSelect addButton";
-  }
-  .inputTodoText {
-    padding-left: 10px;
-    grid-area: inputTodoText;
-    min-width: 50px;
-    padding: 10px 30px;
-    border-radius: 5px;
-    background-color: #fa9a9a;
-    justify-self: stretch;
-    align-self: center;
-  }
-  .addTodoSelect {
-    min-width: 50px;
-  }
-  .addButton {
-    min-width: 50px;
-    background-color: #fca311;
-    padding: 13px;
-    border-radius: 5px;
-    justify-self: stretch;
-    align-self: center;
-  }
-  .TodoItemsList {
-    width: 95%;
-    grid-auto-rows: max-content;
-  }
-}
- */

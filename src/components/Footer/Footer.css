@@ -4,14 +4,14 @@ footer {
   grid-area: footer;
   padding: 1vh;
 }
-p {
+footer > p {
   display: flex;
   justify-content: center;
   justify-items: end;
   color: #f0efeb;
   margin: 5px;
 }
-a {
+footer a {
   color: #a8dadc;
   height: auto;
   text-decoration: none;

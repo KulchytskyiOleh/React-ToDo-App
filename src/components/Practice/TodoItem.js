@@ -11,19 +11,18 @@ export default function TodoItem({
   toggleButton,
   currentItemId,
   category,
+  view,
 }) {
   const inputTodoEditedText = useRef(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(item.text);
   let inputEditedTodoValueHandler = (e) => setEditedText(e.target.value);
-  // const [state, setState] = useState(showButton);
-
   useEffect(() => {
     if (isEditing) inputTodoEditedText.current.focus();
   }, [isEditing]);
 
   return (
-    <div className="todo-item">
+    <div className={`${view ? "todo-item-grid" : "todo-item"}`}>
       <input
         className="checkBoxItem"
         type="checkbox"
@@ -32,7 +31,7 @@ export default function TodoItem({
       />
       {isEditing ? (
         <input
-          className="todoItemInput"
+          className={`${view ? "todoItemInputGrid " : "todoItemInput"}`}
           type="text"
           ref={inputTodoEditedText}
           onChange={inputEditedTodoValueHandler}
@@ -40,7 +39,7 @@ export default function TodoItem({
         />
       ) : (
         <p
-          className={`${item.completed ? "Completed" : "todoText"} `}
+          className={`${item.completed ? "todoText Completed" : "todoText"}`}
           onClick={() => handleChange(item.id)}
         >
           {editedText}
@@ -60,7 +59,7 @@ export default function TodoItem({
             setIsEditing(!isEditing);
           }}
         >
-          <i className="far fa-save" />
+          <i className="fas fa-save" />
         </button>
       ) : (
         <button
@@ -75,12 +74,20 @@ export default function TodoItem({
             setIsEditing(!isEditing);
           }}
         >
-          <i className="far fa-edit" />
+          <i className="fas fa-pen" />
         </button>
       )}
 
-      <button className="todoItemDelete" onClick={() => deleteItem(item.id)}>
-        <i className="fas fa-trash-alt"></i>
+      <button
+        className="todoItemDelete"
+        onClick={() => {
+          if (isEditing) return;
+          else {
+            deleteItem(item.id);
+          }
+        }}
+      >
+        <i className="fas fa-trash" />
       </button>
     </div>
   );

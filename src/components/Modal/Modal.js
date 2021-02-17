@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 
 import Modal from "react-modal";
 import "./Modal.css";
@@ -38,11 +38,7 @@ function ModalWrapper({ modal, setModal }) {
   };
 
   return (
-    <Modal
-      isOpen={modal}
-      onRequestClose={modal}
-      className="Modal"
-    >
+    <Modal isOpen={modal} onRequestClose={modal} className="Modal">
       <div className="Modal">
         <div className="modalWrapper">
           <form className="modalWrapperForm">
@@ -66,7 +62,7 @@ function ModalWrapper({ modal, setModal }) {
                 className="messageInput inputModal"
                 required
                 value={message}
-                type="teaxtarea"
+                type="text"
                 name="Message"
                 id="Message"
                 onChange={messageInputHandler}

@@ -17,7 +17,7 @@ const todosData = [
     id: 3,
     text: "Read some book",
     completed: true,
-    date: new Date(),
+    date: new Date(2021, 1, 17),
     category: "Hobby",
   },
   {

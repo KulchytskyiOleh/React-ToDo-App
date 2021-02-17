@@ -1,23 +1,21 @@
-import React, { useState } from "react";
-function Theme({ displayThemeMenu, setDisplayThemeMenu }) {
+import React, { useContext } from "react";
+import ThemeContext from "../theme-context";
+
+function Theme({ toggleTheme }) {
+  const themes = useContext(ThemeContext);
   return (
     <div className="themeModal">
-      {
-        <div>
-          <button
-            className="themeModalButton"
-            onClick={() => {
-              setDisplayThemeMenu(() => !displayThemeMenu);
-            }}
-          >
-            {displayThemeMenu ? (
-              <i className="fa fa-sun-o"> Light theme</i>
-            ) : (
-              <i className="fa fa-moon-o"> Dark theme</i>
-            )}
-          </button>
-        </div>
-      }
+      <button
+        className="themeModalButton"
+        onClick={toggleTheme}
+        title={`Switch to ${themes.show ? "light" : "dark"} theme`}
+      >
+        <i
+          className={`${
+            themes.show ? "fas fa-sun fa-lg" : "fas fa-moon fa-lg"
+          } ${"buttonIcons"} ${themes.button}`}
+        />
+      </button>
     </div>
   );
 }

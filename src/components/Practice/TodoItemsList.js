@@ -1,4 +1,4 @@
-import React /* useEffect, useState */ from "react";
+import React, { useEffect } from "react";
 import Pagination from "../Pagination/Pagination";
 import TodoItem from "./TodoItem";
 
@@ -17,10 +17,19 @@ export default function TodoItemsList({
   currentCategory,
   currentDateRange,
   currentPageHandler,
+  itemsPerPageHandler,
   status,
   today,
   month,
+  view,
 }) {
+  useEffect(() => {
+    if (!view) {
+      itemsPerPageHandler(4);
+    } else {
+      itemsPerPageHandler(9);
+    }
+  }, [view, itemsPerPage]);
   let dayAdd = (numberDays) => {
     return new Date(
       today.getFullYear(),
@@ -143,30 +152,35 @@ export default function TodoItemsList({
   const currentTodos = filteredTodos.filter((item, index) =>
     Math.ceil(++index / itemsPerPage) === currentPage ? item : null
   );
-
   return (
-    <div className="TodoItemsList">
-      {currentTodos.map((item) => (
-        <TodoItem
-          key={item.id}
-          item={item}
-          category={item.category}
-          currentItemId={currentItemId}
-          handleChange={handleChange}
-          deleteItem={deleteItem}
-          textEdit={textEdit}
-          saveEditedText={saveEditedText}
-          showButton={showButton}
-          currentCategory={currentCategory}
-          toggleButton={toggleButton}
-        />
-      ))}
+    <div className="toDoListWrapper">
+      <div className={`${view ? "TodoItemsGridList" : "TodoItemsList"}`}>
+        {currentTodos.map((item) => (
+          <TodoItem
+            key={item.id}
+            item={item}
+            category={item.category}
+            currentItemId={currentItemId}
+            handleChange={handleChange}
+            deleteItem={deleteItem}
+            textEdit={textEdit}
+            saveEditedText={saveEditedText}
+            showButton={showButton}
+            currentCategory={currentCategory}
+            toggleButton={toggleButton}
+            view={view}
+          />
+        ))}
+      </div>
       <Pagination
+        view={view}
         todos={filteredTodos}
-        itemsPerPage={itemsPerPage}
+        currentTodos={currentTodos}
         currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
         currentCategory={currentCategory}
         currentPageHandler={currentPageHandler}
+        itemsPerPageHandler={itemsPerPageHandler}
       />
     </div>
   );

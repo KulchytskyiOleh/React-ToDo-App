@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./Search.css";
-export default function Search({ onSearch }) {
-  const [value, setValue] = useState('');
+export const Search = ({ onSearch }) => {
+  const [value, setValue] = useState("");
   let searchTodo = (e) => setValue(e.target.value);
   return (
-    <>
+    <div className="searchWrapper">
       <input
         className="input inputSearchTodoText"
         type="text"
@@ -15,6 +15,6 @@ export default function Search({ onSearch }) {
         placeholder="  Search..."
         required
       />
-    </>
+    </div>
   );
-}
+};

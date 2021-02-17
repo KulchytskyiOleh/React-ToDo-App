@@ -1,13 +1,12 @@
 button.menu-bars {
-  margin: 5px;
+  margin: 5px 20px;
   padding: 5px;
   cursor: pointer;
+  background-color: inherit;
 }
-
 .sidebar.active {
   position: absolute;
   display: block;
-  background-color: #d3d3d3;
   padding: 5px;
   height: 300px;
   width: 300px;
@@ -19,6 +18,18 @@ button.menu-bars {
   position: fixed;
   left: -100%;
   transition: 850ms;
+}
+.sidebar--light {
+  background-color: #d3d3d3;
+}
+.sidebar--dark {
+  background-color: #022e3f;
+}
+.button--light {
+  color: #000000;
+}
+.button--dark {
+  color: #ffffff;
 }
 .sidebar-items {
   display: grid;

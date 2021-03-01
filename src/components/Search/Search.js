@@ -1,20 +1,19 @@
 import React, { useState } from "react";
 import "./Search.css";
 export const Search = ({ onSearch }) => {
-  const [value, setValue] = useState("");
-  let searchTodo = (e) => setValue(e.target.value);
+  const [searchValue, setSearchValue] = useState("");
+  let searchTodo = (e) => setSearchValue(e.target.value);
   return (
-    <div className="searchWrapper">
+    <form className="searchWrapper">
       <input
         className="input inputSearchTodoText"
         type="text"
-        value={value}
+        value={searchValue}
         onChange={searchTodo}
-        onKeyDown={() => onSearch(value)}
-        // onKeyDown={(e) => (e.key === "Enter" ? onSearch(value) : null)}
+        onKeyUp={() => onSearch(searchValue)}
         placeholder="  Search..."
         required
       />
-    </div>
+    </form>
   );
 };
